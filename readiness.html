@@ -1,0 +1,867 @@
+<!DOCTYPE HTML>
+<!--
+  Phantom by HTML5 UP
+  html5up.net | @ajlkn
+  Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+  <head>
+    <title>Stage 0 – Founder Readiness (Scored) | Phantom</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <!-- NOTE: keep your Phantom stylesheet path here -->
+    <link rel="stylesheet" href="" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+
+    <!-- Stage 0 tool styles (scoped under #stage0 to avoid breaking Phantom) -->
+    <style>
+      /* Keep Phantom look + make the tool readable inside the theme */
+      #stage0 .tool-card {
+        border: 1px solid rgba(0,0,0,0.08);
+        border-radius: 12px;
+        padding: 18px;
+        margin: 18px 0;
+        background: #fff;
+      }
+      #stage0 h2 { margin: 0 0 10px; }
+      #stage0 h3 { margin: 16px 0 10px; }
+      #stage0 .muted { opacity: .75; font-size: 0.95em; }
+      #stage0 .row {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      #stage0 input[type="text"],
+      #stage0 input[type="date"],
+      #stage0 textarea {
+        border: 1px solid rgba(0,0,0,0.15);
+        border-radius: 8px;
+        padding: 10px 12px;
+        height: auto;
+        min-width: 220px;
+      }
+      #stage0 textarea { width: 100%; min-height: 96px; }
+      #stage0 .btns { display:flex; gap:10px; flex-wrap:wrap; margin-top: 10px; }
+      #stage0 button {
+        border-radius: 8px;
+        border: 1px solid rgba(0,0,0,0.15);
+        padding: 10px 14px;
+        cursor: pointer;
+        font-weight: 600;
+        background: #111;
+        color: #fff;
+      }
+      #stage0 button.secondary { background: #fff; color: #111; }
+      #stage0 table { width: 100%; border-collapse: collapse; }
+      #stage0 th, #stage0 td { padding: 10px 8px; border-bottom: 1px solid rgba(0,0,0,0.06); vertical-align: top; }
+      #stage0 th { text-align:left; font-weight: 700; }
+      #stage0 .scale {
+        display: inline-flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      #stage0 .scale label {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 10px;
+        border: 1px solid rgba(0,0,0,0.12);
+        border-radius: 999px;
+        cursor: pointer;
+        background: #fff;
+        margin: 0;
+      }
+      #stage0 .scale input { margin: 0; }
+      #stage0 .results-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+      @media (min-width: 820px) {
+        #stage0 .results-grid { grid-template-columns: 1fr 1fr; }
+        #stage0 .two-col { display:grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+      }
+      #stage0 .resultBox {
+        border: 1px solid rgba(0,0,0,0.12);
+        border-radius: 12px;
+        padding: 14px;
+        background: #fff;
+      }
+      #stage0 .big {
+        font-size: 2rem;
+        font-weight: 800;
+        margin: 0;
+        line-height: 1.1;
+      }
+      #stage0 .rating { font-weight: 800; margin-top: 6px; }
+      #stage0 .hint { margin-top: 8px; }
+      #stage0 .ok { border-color: rgba(0,0,0,0.12); }
+      #stage0 .good { border-color: rgba(16,185,129,0.35); }
+      #stage0 .warn { border-color: rgba(245,158,11,0.35); }
+      #stage0 .bad { border-color: rgba(239,68,68,0.35); }
+      #stage0 .checkboxes label { display:flex; gap:8px; align-items:flex-start; }
+      #stage0 .small { font-size: 0.9em; opacity: .8; }
+
+      /* ===== Learning icons + popup (scoped under #stage0) ===== */
+      #stage0 .stmt {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      #stage0 .stmt .icons {
+        display: inline-flex;
+        gap: 6px;
+        margin-left: 2px;
+      }
+      #stage0 .iconBtnMini{
+        width: 30px;
+        height: 30px;
+        border-radius: 999px;
+        border: 1px solid rgba(0,0,0,0.12);
+        background: #fff;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+        font-size: 14px;
+        padding: 0;
+      }
+      #stage0 .iconBtnMini:hover{ border-color: rgba(0,0,0,0.25); }
+      #stage0 .iconBtnMini:focus{
+        outline: 2px solid rgba(37,99,235,.25);
+        outline-offset: 2px;
+      }
+
+      #stage0 .learnOverlay{
+        position: fixed;
+        inset: 0;
+        background: rgba(17,24,39,.35);
+        display: none;
+        z-index: 9998;
+      }
+      #stage0 .learnOverlay.open{ display:block; }
+
+      #stage0 .learnModal{
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: min(760px, 92vw);
+        max-height: min(80vh, 720px);
+        background: #fff;
+        border-radius: 14px;
+        border: 1px solid rgba(0,0,0,0.10);
+        box-shadow: 0 18px 50px rgba(17,24,39,.20);
+        display: none;
+        z-index: 9999;
+        overflow: hidden;
+      }
+      #stage0 .learnModal.open{ display:block; }
+
+      #stage0 .learnHeader{
+        padding: 14px 16px;
+        border-bottom: 1px solid rgba(0,0,0,0.08);
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      #stage0 .learnHeader h3{
+        margin: 0;
+        font-size: 1rem;
+        line-height: 1.25;
+      }
+      #stage0 .learnTag{
+        margin-top: 6px;
+        font-size: 0.9em;
+        opacity: .75;
+      }
+      #stage0 .learnClose{
+        border-radius: 10px;
+        border: 1px solid rgba(0,0,0,0.15);
+        padding: 8px 10px;
+        background: #fff;
+        cursor: pointer;
+        font-weight: 700;
+        color: #111;
+      }
+
+      #stage0 .learnTabs{
+        padding: 10px 16px;
+        background: #f8fafc;
+        border-bottom: 1px solid rgba(0,0,0,0.08);
+        display: flex;
+        gap: 8px;
+      }
+      #stage0 .learnTab{
+        border: 1px solid rgba(0,0,0,0.12);
+        background: #fff;
+        border-radius: 999px;
+        padding: 7px 10px;
+        cursor: pointer;
+        font-weight: 800;
+        font-size: 0.9rem;
+        color: #111;
+      }
+      #stage0 .learnTab.active{
+        border-color: rgba(37,99,235,.35);
+        background: rgba(37,99,235,.08);
+        color: #2563eb;
+      }
+
+      #stage0 .learnBody{
+        padding: 14px 16px 18px;
+        overflow: auto;
+        max-height: calc(80vh - 120px);
+      }
+      #stage0 .learnBox{
+        border: 1px solid rgba(0,0,0,0.10);
+        border-radius: 12px;
+        padding: 12px;
+        background: #fff;
+        margin-bottom: 10px;
+      }
+      #stage0 .learnBoxTitle{
+        font-size: 0.82rem;
+        opacity: .75;
+        text-transform: uppercase;
+        letter-spacing: .06em;
+        font-weight: 800;
+        margin: 0 0 8px 0;
+      }
+      #stage0 .learnBody ul{ margin: 0; padding-left: 18px; }
+      #stage0 .learnBody li{ margin: 6px 0; }
+      #stage0 .learnLinks a{ display:block; margin: 6px 0; word-break: break-word; }
+
+      /* Force mini icon buttons to display literal emoji text (not theme icons) */
+#stage0 .iconBtnMini{
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,0.12);
+  background: #fff !important;
+  cursor: pointer;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  padding: 0 !important;
+  font-size: 14px;
+  color: #111 !important;
+
+  /* prevent Phantom/FontAwesome “icon” rendering */
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif !important;
+  text-decoration: none !important;
+}
+#stage0 .iconBtnMini::before,
+#stage0 .iconBtnMini::after{
+  content: none !important;  /* stops theme pseudo-icon injection */
+}
+#stage0 .iconBtnMini .iconTxt{
+  font-size: 16px;
+  line-height: 1;
+  display: inline-block;
+}
+    </style>
+  </head>
+
+  <body class="is-preload">
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+      <!-- Header -->
+      <!-- (Your Phantom header goes here; omitted in your snippet) -->
+
+      <!-- Menu -->
+      <nav id="menu">
+        <h2>Menu</h2>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+        </ul>
+      </nav>
+
+      <!-- Main -->
+      <div id="main">
+        <div class="inner">
+
+          <section id="stage0">
+            <header class="major">
+              <h1>Stage 0 – Founder Readiness, Risk &amp; Time Assessment (Scored)</h1>
+              <p class="muted">
+                Coaching / intake tool for BC &amp; Canada founders. Score honestly to decide:
+                <strong>Proceed</strong>, <strong>Start Small</strong>, or <strong>Pause</strong>.
+                (0–4 scale where 0 = not true, 4 = very true)
+              </p>
+            </header>
+
+            <!-- Top controls -->
+            <div class="tool-card">
+              <div class="row">
+                <input id="founderName" type="text" placeholder="Founder name" />
+                <input id="assessDate" type="date" />
+                <input id="coachName" type="text" placeholder="Coach / Advisor name" />
+              </div>
+
+              <div class="btns">
+                <button type="button" id="btnCalc">Calculate Score</button>
+                <button type="button" class="secondary" id="btnReset">Reset</button>
+                <button type="button" class="secondary" id="btnPrint">Print / Save PDF</button>
+              </div>
+
+              <p class="small" style="margin-top:10px;">
+                Tip: Use <strong>Print / Save PDF</strong> to save a shareable record.
+              </p>
+            </div>
+
+            <!-- Results -->
+            <div class="tool-card">
+              <h2>Results</h2>
+
+              <div class="results-grid">
+                <div id="totalBox" class="resultBox ok">
+                  <p class="muted" style="margin:0;">Total Score</p>
+                  <p class="big" id="totalScore">—</p>
+                  <p class="muted" style="margin:0;">Max 92</p>
+                </div>
+
+                <div id="ratingBox" class="resultBox ok">
+                  <p class="muted" style="margin:0;">Readiness Rating</p>
+                  <div class="rating" id="ratingText">—</div>
+                  <div class="hint muted" id="ratingHint">Fill in the assessment and click Calculate.</div>
+                </div>
+              </div>
+
+              <div class="two-col" style="margin-top:14px;">
+                <div class="resultBox ok">
+                  <p class="muted" style="margin:0;">Section Totals</p>
+                  <table>
+                    <tbody>
+                      <tr><td>A. Mindset</td><td style="text-align:right;"><strong id="sA">—</strong> / 20</td></tr>
+                      <tr><td>B. Skills</td><td style="text-align:right;"><strong id="sB">—</strong> / 16</td></tr>
+                      <tr><td>C. Time</td><td style="text-align:right;"><strong id="sC">—</strong> / 20</td></tr>
+                      <tr><td>D. Financial</td><td style="text-align:right;"><strong id="sD">—</strong> / 24</td></tr>
+                      <tr><td>E. Support</td><td style="text-align:right;"><strong id="sE">—</strong> / 12</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="resultBox ok">
+                  <p class="muted" style="margin:0;">Coach Notes &amp; 30–60 Day Actions</p>
+                  <h3 style="margin-top:10px;">Top 2 risk areas</h3>
+                  <textarea id="riskAreas" placeholder="1) ...&#10;2) ..."></textarea>
+                  <h3>Recommended next actions (30–60 days)</h3>
+                  <textarea id="nextActions" placeholder="- Skill upgrade&#10;- Market interviews&#10;- Savings plan&#10;- Advisor referral"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Section A -->
+            <div class="tool-card">
+              <h2>Section A — Motivation &amp; Mindset <span class="muted">(Max 20)</span></h2>
+              <p class="muted">Rate each statement (0–4).</p>
+              <table>
+                <thead>
+                  <tr><th>Statement</th><th style="width:340px;">Score</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>I understand business success is uncertain.</td><td><div class="scale" data-group="A1"></div></td></tr>
+                  <tr><td>I am comfortable with ambiguity and change.</td><td><div class="scale" data-group="A2"></div></td></tr>
+                  <tr><td>My motivation is realistic (income, independence, growth).</td><td><div class="scale" data-group="A3"></div></td></tr>
+                  <tr><td>I accept feedback and can pivot if needed.</td><td><div class="scale" data-group="A4"></div></td></tr>
+                  <tr><td>I am emotionally prepared for setbacks.</td><td><div class="scale" data-group="A5"></div></td></tr>
+                </tbody>
+              </table>
+              <p class="muted"><strong>Interpretation:</strong> 16–20 strong; 10–15 adequate with support; &lt;10 pause &amp; mindset work.</p>
+            </div>
+
+            <!-- Section B -->
+            <div class="tool-card">
+              <h2>Section B — Skills &amp; Learning Capacity <span class="muted">(Max 16)</span></h2>
+              <p class="muted">Rate each statement (0–4). Click 🛈 for how to check and 🔗 for resources.</p>
+              <table>
+                <thead>
+                  <tr><th>Statement</th><th style="width:340px;">Score</th></tr>
+                </thead>
+                <tbody>
+                  <!-- B1 with icons -->
+                  <tr>
+                    <td>
+                      <span class="stmt">
+                        I have the core skills to deliver the product/service.
+                        <span class="icons">
+                          <button class="iconBtnMini" type="button" data-open="how" data-id="B1" aria-label="How to check">🛈</button>
+                          <button class="iconBtnMini" type="button" data-open="res" data-id="B1" aria-label="Resources">🔗</button>
+                        </span>
+                      </span>
+                    </td>
+                    <td><div class="scale" data-group="B1"></div></td>
+                  </tr>
+
+                  <tr><td>I know what skills I lack.</td><td><div class="scale" data-group="B2"></div></td></tr>
+                  <tr><td>I have a plan to learn or outsource gaps.</td><td><div class="scale" data-group="B3"></div></td></tr>
+                  <tr><td>I know when to ask professionals for help.</td><td><div class="scale" data-group="B4"></div></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Section C -->
+            <div class="tool-card">
+              <h2>Section C — Time &amp; Capacity <span class="muted">(Max 20)</span></h2>
+
+              <h3>C1. Weekly time availability (choose one)</h3>
+              <div class="scale" id="timeAvail">
+                <label><input type="radio" name="C1" value="2"> &lt; 5 hrs (2)</label>
+                <label><input type="radio" name="C1" value="6"> 5–10 hrs (6)</label>
+                <label><input type="radio" name="C1" value="12"> 10–20 hrs (12)</label>
+                <label><input type="radio" name="C1" value="16"> 20+ hrs (16)</label>
+              </div>
+
+              <h3 style="margin-top:14px;">C2. Capacity strain (deductions)</h3>
+              <p class="muted">Tick all that apply (each −2).</p>
+              <div class="checkboxes">
+                <label><input type="checkbox" class="deduct" value="2"> Full-time job (−2)</label>
+                <label><input type="checkbox" class="deduct" value="2"> Caregiving duties (−2)</label>
+                <label><input type="checkbox" class="deduct" value="2"> Health constraints (−2)</label>
+                <label><input type="checkbox" class="deduct" value="2"> Study/immigration obligations (−2)</label>
+              </div>
+
+              <p class="muted"><strong>Interpretation:</strong> 15–20 strong capacity; 8–14 start small; &lt;8 high burnout risk.</p>
+            </div>
+
+            <!-- Section D -->
+            <div class="tool-card">
+              <h2>Section D — Financial Safety &amp; Risk <span class="muted">(Max 24)</span></h2>
+
+              <h3>D1. Personal financial buffer (choose one)</h3>
+              <div class="scale" id="buffer">
+                <label><input type="radio" name="D1" value="12"> 6+ months living expenses (12)</label>
+                <label><input type="radio" name="D1" value="8"> 3–5 months (8)</label>
+                <label><input type="radio" name="D1" value="4"> &lt; 3 months (4)</label>
+                <label><input type="radio" name="D1" value="0"> No buffer (0)</label>
+              </div>
+
+              <h3 style="margin-top:14px;">D2. Financial discipline &amp; asset protection (0–4 each)</h3>
+              <p class="muted">Click 🛈 for how to check and 🔗 for resources.</p>
+              <table>
+                <thead>
+                  <tr><th>Statement</th><th style="width:340px;">Score</th></tr>
+                </thead>
+                <tbody>
+                  <!-- D2_1 with icons -->
+                  <tr>
+                    <td>
+                      <span class="stmt">
+                        I will keep personal and business finances separate.
+                        <span class="icons">
+                          <button class="iconBtnMini" type="button" data-open="how" data-id="D2_1" aria-label="How to check">🛈</button>
+                          <button class="iconBtnMini" type="button" data-open="res" data-id="D2_1" aria-label="Resources">🔗</button>
+                        </span>
+                      </span>
+                    </td>
+                    <td><div class="scale" data-group="D2_1"></div></td>
+                  </tr>
+
+                  <!-- D2_2 with icons -->
+                  <tr>
+                    <td>
+                      <span class="stmt">
+                        I understand sole proprietorship vs corporation risk.
+                        <span class="icons">
+                          <button class="iconBtnMini" type="button" data-open="how" data-id="D2_2" aria-label="How to check">🛈</button>
+                          <button class="iconBtnMini" type="button" data-open="res" data-id="D2_2" aria-label="Resources">🔗</button>
+                        </span>
+                      </span>
+                    </td>
+                    <td><div class="scale" data-group="D2_2"></div></td>
+                  </tr>
+
+                  <!-- D2_3 with icons -->
+                  <tr>
+                    <td>
+                      <span class="stmt">
+                        I know when to seek accounting/legal advice.
+                        <span class="icons">
+                          <button class="iconBtnMini" type="button" data-open="how" data-id="D2_3" aria-label="How to check">🛈</button>
+                          <button class="iconBtnMini" type="button" data-open="res" data-id="D2_3" aria-label="Resources">🔗</button>
+                        </span>
+                      </span>
+                    </td>
+                    <td><div class="scale" data-group="D2_3"></div></td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <p class="muted"><strong>Coach warning:</strong> Section D &lt; 10 → do not rush launch.</p>
+            </div>
+
+            <!-- Section E -->
+            <div class="tool-card">
+              <h2>Section E — Support System <span class="muted">(Max 12)</span></h2>
+              <p class="muted">Rate each statement (0–4).</p>
+              <table>
+                <thead>
+                  <tr><th>Statement</th><th style="width:340px;">Score</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>My family/support system understands my commitment.</td><td><div class="scale" data-group="E1"></div></td></tr>
+                  <tr><td>I have emotional or peer support.</td><td><div class="scale" data-group="E2"></div></td></tr>
+                  <tr><td>I know where to get free/low-cost business help.</td><td><div class="scale" data-group="E3"></div></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Sign-off -->
+            <div class="tool-card">
+              <h2>Sign-off (Professional Use)</h2>
+              <div class="two-col">
+                <div>
+                  <p><strong>Founder name:</strong> <span id="sigFounder" class="muted">—</span></p>
+                  <p><strong>Date:</strong> <span id="sigDate" class="muted">—</span></p>
+                </div>
+                <div>
+                  <p><strong>Coach / Advisor:</strong> <span id="sigCoach" class="muted">—</span></p>
+                </div>
+              </div>
+              <p class="small">
+                This tool supports planning and coaching only and does not replace legal, accounting, or tax advice.
+              </p>
+            </div>
+
+            <!-- ===== Learning popup (scoped under #stage0) ===== -->
+            <div class="learnOverlay" id="learnOverlay" aria-hidden="true"></div>
+
+            <div class="learnModal" id="learnModal" aria-label="Learning panel" aria-hidden="true">
+              <div class="learnHeader">
+                <div>
+                  <h3 id="learnTitle">Item details</h3>
+                  <div class="learnTag" id="learnTag">—</div>
+                </div>
+                <button class="learnClose" id="learnClose" type="button">Close</button>
+              </div>
+
+              <div class="learnTabs" role="tablist" aria-label="Tabs">
+                <button class="learnTab active" id="learnTabHow" type="button" role="tab" aria-selected="true">How to check</button>
+                <button class="learnTab" id="learnTabRes" type="button" role="tab" aria-selected="false">Resources</button>
+              </div>
+
+              <div class="learnBody">
+                <div id="learnHow"></div>
+                <div id="learnRes" style="display:none;"></div>
+              </div>
+            </div>
+
+          </section>
+
+        </div>
+      </div>
+
+      <!-- Footer (unchanged; omitted in your snippet) -->
+
+    </div>
+
+    <!-- Scripts (Phantom) -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <!-- Stage 0 tool JS (after Phantom scripts) -->
+    <script>
+      (function () {
+        // Build 0–4 radio controls for each .scale[data-group]
+        function buildScale(container, name) {
+          container.innerHTML = "";
+          for (var i = 0; i <= 4; i++) {
+            var id = name + "_" + i;
+            var label = document.createElement("label");
+            label.htmlFor = id;
+            label.innerHTML = '<input id="' + id + '" type="radio" name="' + name + '" value="' + i + '"> ' + i;
+            container.appendChild(label);
+          }
+        }
+
+        function getRadioValue(name) {
+          var el = document.querySelector('input[name="' + name + '"]:checked');
+          return el ? parseInt(el.value, 10) : 0;
+        }
+
+        function sumRadioGroupList(names) {
+          return names.reduce(function (acc, n) { return acc + getRadioValue(n); }, 0);
+        }
+
+        function sumDeductions() {
+          var d = 0;
+          document.querySelectorAll('#stage0 .deduct:checked').forEach(function (cb) {
+            d += parseInt(cb.value, 10);
+          });
+          return d;
+        }
+
+        function clamp(x, lo, hi) {
+          return Math.max(lo, Math.min(hi, x));
+        }
+
+        function setBoxState(box, state) {
+          box.classList.remove("good", "warn", "bad", "ok");
+          box.classList.add(state);
+        }
+
+        function calculate() {
+          // Section A (max 20)
+          var sA = sumRadioGroupList(["A1","A2","A3","A4","A5"]);
+
+          // Section B (max 16)
+          var sB = sumRadioGroupList(["B1","B2","B3","B4"]);
+
+          // Section C (max 20): C1 (2/6/12/16) - deductions, clamped
+          var c1 = getRadioValue("C1");
+          var ded = sumDeductions();
+          var sC = clamp(c1 - ded, 0, 20);
+
+          // Section D (max 24): D1 (0/4/8/12) + 3x(0–4)
+          var d1 = getRadioValue("D1");
+          var d2 = sumRadioGroupList(["D2_1","D2_2","D2_3"]);
+          var sD = clamp(d1 + d2, 0, 24);
+
+          // Section E (max 12)
+          var sE = sumRadioGroupList(["E1","E2","E3"]);
+
+          var total = sA + sB + sC + sD + sE; // max 92
+          var financeWarn = (sD < 10);
+
+          // Update UI
+          document.getElementById("sA").textContent = sA;
+          document.getElementById("sB").textContent = sB;
+          document.getElementById("sC").textContent = sC;
+          document.getElementById("sD").textContent = sD;
+          document.getElementById("sE").textContent = sE;
+          document.getElementById("totalScore").textContent = total;
+
+          var ratingText = document.getElementById("ratingText");
+          var ratingHint = document.getElementById("ratingHint");
+          var totalBox = document.getElementById("totalBox");
+          var ratingBox = document.getElementById("ratingBox");
+
+          if (total >= 75 && !financeWarn) {
+            ratingText.textContent = "🟢 READY TO PROCEED (75–92)";
+            ratingHint.innerHTML = "Proceed to Stage 1–7 roadmap. Keep monitoring cash flow and compliance.";
+            setBoxState(totalBox, "good");
+            setBoxState(ratingBox, "good");
+          } else if (total >= 55) {
+            ratingText.textContent = "🟡 START SMALL / PART-TIME (55–74)";
+            ratingHint.innerHTML = "Focus on validation + first sales. Delay major spending and avoid rushing incorporation.";
+            setBoxState(totalBox, "warn");
+            setBoxState(ratingBox, "warn");
+          } else {
+            ratingText.textContent = "🔴 PAUSE & PREPARE (<55)";
+            ratingHint.innerHTML = "Build buffer, skills, and support first. Reassess in 60–90 days before launching.";
+            setBoxState(totalBox, "bad");
+            setBoxState(ratingBox, "bad");
+          }
+
+          if (financeWarn) {
+            ratingHint.innerHTML += "<br><br><strong>Coach warning:</strong> Financial section is under 10 → do not rush launch. Consider savings plan, smaller scope, or additional income support.";
+          }
+
+          // Sign-off display
+          document.getElementById("sigFounder").textContent = document.getElementById("founderName").value || "—";
+          document.getElementById("sigCoach").textContent = document.getElementById("coachName").value || "—";
+          document.getElementById("sigDate").textContent = document.getElementById("assessDate").value || "—";
+        }
+
+        function resetAll() {
+          document.querySelectorAll('#stage0 input[type="radio"]').forEach(function (r) { r.checked = false; });
+          document.querySelectorAll('#stage0 input[type="checkbox"]').forEach(function (c) { c.checked = false; });
+          document.querySelectorAll('#stage0 input[type="text"], #stage0 input[type="date"]').forEach(function (i) { i.value = ""; });
+          document.querySelectorAll('#stage0 textarea').forEach(function (t) { t.value = ""; });
+
+          ["sA","sB","sC","sD","sE","totalScore"].forEach(function (id) {
+            document.getElementById(id).textContent = "—";
+          });
+          document.getElementById("ratingText").textContent = "—";
+          document.getElementById("ratingHint").textContent = "Fill in the assessment and click Calculate.";
+          document.getElementById("sigFounder").textContent = "—";
+          document.getElementById("sigCoach").textContent = "—";
+          document.getElementById("sigDate").textContent = "—";
+
+          setBoxState(document.getElementById("totalBox"), "ok");
+          setBoxState(document.getElementById("ratingBox"), "ok");
+
+          // Also close popup if open
+          closeLearn();
+        }
+
+        /* ===== Learning popup content (ONLY for B1 + D2_1 + D2_2 + D2_3) ===== */
+        var LEARN = {
+          B1: {
+            title: "Core skills to deliver the product/service",
+            tag: "Section B • Skills",
+            how: [
+              "List the 5–8 must-have tasks required to deliver (step-by-step delivery).",
+              "Run a small pilot: deliver to 1–3 real customers and track what was difficult.",
+              "Confirm whether licences/certifications are required for your industry (non-optional).",
+              "If gaps exist: learn, partner, outsource, or delay launch until ready."
+            ],
+            resources: [
+              { label: "BizPaL (permits & licences finder)", url: "https://bizpal.ca/" },
+              { label: "BC: Permits & licences (overview)", url: "https://www2.gov.bc.ca/gov/content/employment-business/business/managing-a-business/starting-a-business/permits-licences" },
+              { label: "WorkBC: Planning resources", url: "https://www.workbc.ca/access-employer-resources/manage-your-business/planning-resources" },
+              { label: "Community Futures Central Okanagan (Kelowna region)", url: "https://cfdcco.com" }
+            ]
+          },
+
+          D2_1: {
+            title: "Keep personal and business finances separate",
+            tag: "Section D • Financial safety",
+            how: [
+              "Open a separate business bank account (even as a sole proprietor).",
+              "Use one card/account for business purchases only.",
+              "Save receipts and record purpose (simple notes are okay).",
+              "Monthly check: can you clearly separate personal vs business money?"
+            ],
+            resources: [
+              { label: "CRA: Businesses and taxes (Canada)", url: "https://www.canada.ca/en/services/taxes/businesses.html" },
+              { label: "Small Business BC (BC)", url: "https://smallbusinessbc.ca" },
+              { label: "Community Futures Central Okanagan (Kelowna region)", url: "https://cfdcco.com" }
+            ]
+          },
+
+          D2_2: {
+            title: "Understand sole proprietorship vs corporation risk",
+            tag: "Section D • Liability & structure",
+            how: [
+              "Explain in your own words: personal liability (sole proprietor) vs limited liability (corporation).",
+              "List top 3 risks (debt, claims, contracts) and who is responsible under each structure.",
+                "As a sole proprietor, am I personally liable for debts, lawsuits, and obligations? ",
+                "As a corporation,do I understant: limited liability(with exceptions);Ongoing costs(filings,bookkeeping,tax returns);Director responsibilityes?",
+              "Comfirm tax responsibilities:",
+                "Which taxes apply to your business (Corporate or personal income tax; GST/HST mandatory once revenue > $30,000; Payroll (CPP, EI) if hiring)",
+                "When you must register for GST/HST.",
+                "What records you must keep and for how long"
+            ],
+            resources: [
+              { label: "BC: Choosing a business structure", url: "https://www2.gov.bc.ca/gov/content/employment-business/business/managing-a-business/starting-a-business/choosing-a-business-structure" },
+              { label: "BC Registry Services", url: "https://www.bcregistry.gov.bc.ca" },
+              { label: "CRA: Corporations (Canada)", url: "https://www.canada.ca/en/services/taxes/businesses/topics/corporations.html" }
+            ]
+          },
+
+          D2_3: {
+            title: "Know when to seek accounting/legal advice",
+            tag: "Section D • Professional advice",
+            how: [
+              "Accounting: when revenue grows, cash flow is unclear, GST/HST may apply, or you hire contractors/employees.",
+              "Legal: before signing leases/contracts, entering partnerships, or handling disputes/claims.",
+              "If you cannot explain your biggest risk in 1 sentence → consult an advisor."
+            ],
+            resources: [
+              { label: "CRA: GST/HST businesses (Canada)", url: "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/gst-hst-businesses.html" },
+              { label: "Small Business BC", url: "https://smallbusinessbc.ca" },
+              { label: "WeBC (BC & North)", url: "https://we-bc.ca" },
+              { label: "Kelowna Chamber of Commerce", url: "https://www.kelownachamber.org" }
+            ]
+          }
+        };
+
+        function escapeHtml(str){
+          return String(str)
+            .replaceAll("&","&amp;")
+            .replaceAll("<","&lt;")
+            .replaceAll(">","&gt;")
+            .replaceAll('"',"&quot;")
+            .replaceAll("'","&#039;");
+        }
+
+        function renderHow(item){
+          var lis = (item.how || []).map(function(x){ return "<li>" + escapeHtml(x) + "</li>"; }).join("");
+          return '<div class="learnBox"><div class="learnBoxTitle">Step-by-step</div><ul>' + (lis || "<li>—</li>") + '</ul></div>';
+        }
+
+        function renderRes(item){
+          var links = (item.resources || []).map(function(r){
+            return '<div class="learnLinks"><a href="' + escapeHtml(r.url) + '" target="_blank" rel="noopener noreferrer">' +
+              escapeHtml(r.label) + "</a></div>";
+          }).join("");
+          return '<div class="learnBox"><div class="learnBoxTitle">Official links</div>' + (links || "—") + "</div>";
+        }
+
+        function setLearnTab(which){
+          var tabHow = document.getElementById("learnTabHow");
+          var tabRes = document.getElementById("learnTabRes");
+          var howDiv = document.getElementById("learnHow");
+          var resDiv = document.getElementById("learnRes");
+
+          var isHow = (which === "how");
+          tabHow.classList.toggle("active", isHow);
+          tabRes.classList.toggle("active", !isHow);
+          tabHow.setAttribute("aria-selected", isHow ? "true" : "false");
+          tabRes.setAttribute("aria-selected", !isHow ? "true" : "false");
+          howDiv.style.display = isHow ? "block" : "none";
+          resDiv.style.display = isHow ? "none" : "block";
+        }
+
+        function openLearn(id, mode){
+          var item = LEARN[id];
+          if(!item) return;
+
+          document.getElementById("learnTitle").textContent = item.title;
+          document.getElementById("learnTag").textContent = item.tag;
+          document.getElementById("learnHow").innerHTML = renderHow(item);
+          document.getElementById("learnRes").innerHTML = renderRes(item);
+
+          setLearnTab(mode === "res" ? "res" : "how");
+
+          document.getElementById("learnOverlay").classList.add("open");
+          document.getElementById("learnModal").classList.add("open");
+          document.getElementById("learnOverlay").setAttribute("aria-hidden", "false");
+          document.getElementById("learnModal").setAttribute("aria-hidden", "false");
+        }
+
+        function closeLearn(){
+          var o = document.getElementById("learnOverlay");
+          var m = document.getElementById("learnModal");
+          if(!o || !m) return;
+          o.classList.remove("open");
+          m.classList.remove("open");
+          o.setAttribute("aria-hidden", "true");
+          m.setAttribute("aria-hidden", "true");
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+          // Build all 0–4 scales
+          document.querySelectorAll('#stage0 .scale[data-group]').forEach(function (el) {
+            buildScale(el, el.getAttribute('data-group'));
+          });
+
+          // Buttons
+          document.getElementById("btnCalc").addEventListener("click", calculate);
+          document.getElementById("btnReset").addEventListener("click", resetAll);
+          document.getElementById("btnPrint").addEventListener("click", function () { window.print(); });
+
+          // Icon clicks (🛈 / 🔗)
+          document.querySelectorAll('#stage0 button[data-open][data-id]').forEach(function(btn){
+            btn.addEventListener("click", function(){
+              openLearn(btn.getAttribute("data-id"), btn.getAttribute("data-open"));
+            });
+          });
+
+          // Tabs
+          document.getElementById("learnTabHow").addEventListener("click", function(){ setLearnTab("how"); });
+          document.getElementById("learnTabRes").addEventListener("click", function(){ setLearnTab("res"); });
+
+          // Close behaviors
+          document.getElementById("learnClose").addEventListener("click", closeLearn);
+          document.getElementById("learnOverlay").addEventListener("click", closeLearn);
+          document.addEventListener("keydown", function(e){
+            if(e.key === "Escape") closeLearn();
+          });
+        });
+      })();
+    </script>
+
+  </body>
+</html>

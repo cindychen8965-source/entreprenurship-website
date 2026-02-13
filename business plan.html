@@ -1,0 +1,1782 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Business Plan Checklist (Canada | BC | Kelowna)</title>
+
+  <style>
+    :root{
+      --border:#e5e7eb;
+      --text:#111827;
+      --muted:#6b7280;
+      --bg:#ffffff;
+      --bg2:#f9fafb;
+      --card:#ffffff;
+      --shadow: 0 8px 24px rgba(17,24,39,.08);
+      --radius: 14px;
+      --accent:#2563eb;
+      --panel:#f8fafc;
+    }
+    body{
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      margin: 24px;
+      color: var(--text);
+      background: var(--bg);
+    }
+    h1{
+      font-size: 1.25rem;
+      margin: 0 0 6px;
+    }
+    .sub{
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      max-width: 1100px;
+    }
+
+    /* Top bar */
+    .topbar{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      margin: 14px 0 16px;
+    }
+    .controls{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .btn{
+      border:1px solid var(--border);
+      background:#fff;
+      border-radius: 10px;
+      padding:9px 12px;
+      cursor:pointer;
+      font-size:0.92rem;
+    }
+    .btn:hover{ background: var(--bg2); border-color:#cbd5e1; }
+    .btn.primary{
+      border-color: rgba(37,99,235,.35);
+      background: rgba(37,99,235,.08);
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .progress{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      min-width: min(520px, 92vw);
+      flex: 1 1 380px;
+    }
+    .bar{
+      height: 10px;
+      background: #eef2ff;
+      border:1px solid rgba(37,99,235,.18);
+      border-radius:999px;
+      overflow:hidden;
+      flex: 1 1 auto;
+      min-width: 200px;
+    }
+    .bar > div{
+      height:100%;
+      width:0%;
+      background: rgba(37,99,235,.55);
+    }
+    .pct{
+      font-size: 0.9rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .tiny{
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    /* Desktop/tablet: classic table */
+    .table-wrap{
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--bg);
+      box-shadow: var(--shadow);
+    }
+    table{
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 1040px;
+    }
+    thead th{
+      text-align: left;
+      font-weight: 800;
+      font-size: 0.95rem;
+      padding: 12px 14px;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    tbody td{
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      font-size: 0.95rem;
+    }
+    tbody tr:last-child td{
+      border-bottom: none;
+    }
+
+    /* Checklist styling */
+    .items{
+      display: grid;
+      gap: 10px;
+    }
+    .item{
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      line-height: 1.35;
+    }
+    .item-left{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      min-width: 0;
+    }
+    .item input[type="checkbox"]{
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      accent-color: var(--accent);
+      flex: 0 0 auto;
+      cursor: pointer;
+    }
+    .item label{
+      cursor: pointer;
+      display:block;
+    }
+    .item-tools{
+      display:flex;
+      gap:8px;
+      flex: 0 0 auto;
+    }
+    .iconBtn{
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #fff;
+      cursor: pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-size: 16px;
+      line-height: 1;
+    }
+    .iconBtn:hover{
+      border-color: #cbd5e1;
+      background: #f9fafb;
+    }
+    .iconBtn:focus{
+      outline: 2px solid rgba(37,99,235,.25);
+      outline-offset: 2px;
+    }
+    .hint{
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    /* Area + Section cells */
+    .areaCell{
+      font-weight: 900;
+      letter-spacing: .02em;
+    }
+    .sectionCell{
+      font-weight: 800;
+    }
+
+    /* Drawer (learning panel) */
+    .drawerOverlay{
+      position:fixed;
+      inset:0;
+      background: rgba(17,24,39,.35);
+      display:none;
+      z-index:50;
+    }
+    .drawerOverlay.open{ display:block; }
+    .drawer{
+      position:fixed;
+      top:0;
+      right:0;
+      height:100%;
+      width:min(560px, 92vw);
+      background:#fff;
+      box-shadow: var(--shadow);
+      transform: translateX(105%);
+      transition: transform .18s ease;
+      z-index:60;
+      display:flex;
+      flex-direction:column;
+    }
+    .drawer.open{ transform: translateX(0); }
+    .drawerHeader{
+      padding:14px;
+      border-bottom:1px solid var(--border);
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .drawerHeader h2{
+      margin:0;
+      font-size: 1rem;
+      line-height:1.25;
+    }
+    .drawerTag{
+      margin-top:6px;
+      font-size:0.85rem;
+      color: var(--muted);
+    }
+    .closeBtn{
+      border:1px solid var(--border);
+      background:#fff;
+      border-radius: 10px;
+      padding:8px 10px;
+      cursor:pointer;
+    }
+    .tabs{
+      display:flex;
+      gap:8px;
+      padding:10px 14px;
+      border-bottom:1px solid var(--border);
+      background: var(--panel);
+    }
+    .tab{
+      border:1px solid var(--border);
+      background:#fff;
+      border-radius: 999px;
+      padding:7px 10px;
+      font-size:0.9rem;
+      cursor:pointer;
+    }
+    .tab.active{
+      border-color: rgba(37,99,235,.35);
+      background: rgba(37,99,235,.08);
+      color: var(--accent);
+      font-weight:800;
+    }
+    .drawerBody{
+      padding: 12px 14px 18px;
+      overflow:auto;
+    }
+    .panelBlock{
+      border:1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 10px;
+      background:#fff;
+    }
+    .panelTitle{
+      margin:0 0 8px 0;
+      font-size: 0.82rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      font-weight: 900;
+    }
+    ul{
+      margin:0;
+      padding-left: 18px;
+    }
+    li{ margin: 6px 0; }
+    .links a{
+      display:block;
+      margin: 6px 0;
+      word-break: break-word;
+    }
+
+    /* Mobile: cards */
+    @media (max-width: 640px){
+      body{ margin: 16px; }
+      .table-wrap{
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        overflow: visible;
+      }
+      table{ min-width: 0; }
+      thead{ display: none; }
+      tbody, tr, td{ display: block; width: 100%; }
+      tbody tr{
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        margin-bottom: 12px;
+        background: var(--card);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+      tbody td{
+        border: none;
+        border-bottom: 1px solid var(--border);
+        padding: 12px 14px;
+      }
+      tbody td:last-child{ border-bottom: none; }
+      td::before{
+        content: attr(data-label);
+        display: block;
+        font-weight: 800;
+        font-size: 0.85rem;
+        color: var(--muted);
+        margin-bottom: 6px;
+      }
+      .progress{ min-width: 100%; }
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Business Plan Checklist (Canada | BC | Kelowna)</h1>
+  <p class="sub">
+    Tick items as you complete them. Click <b>🛈</b> for “How to check” and <b>🔗</b> for “Resources”.
+    Your progress saves automatically in this browser.
+  </p>
+
+  <div class="topbar" aria-label="Checklist controls">
+    <div class="controls">
+      <button class="btn primary" type="button" id="btnSave">Save</button>
+      <button class="btn" type="button" id="btnExport">Export summary</button>
+      <button class="btn" type="button" id="btnReset">Reset</button>
+      <span class="tiny" id="saveStatus" aria-live="polite"></span>
+    </div>
+
+    <div class="progress" aria-label="Progress">
+      <div class="bar" aria-hidden="true"><div id="barFill"></div></div>
+      <div class="pct"><b id="pctText">0%</b> complete (<span id="countText">0/0</span>)</div>
+    </div>
+  </div>
+
+  <div class="table-wrap" role="region" aria-label="Business Plan Checklist Table" tabindex="0">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:14%">Area</th>
+          <th style="width:18%">Section</th>
+          <th style="width:24%">What you’re proving</th>
+          <th>Checklist Items</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <!-- ===================== EXECUTIVE SUMMARY ===================== -->
+        <tr>
+          <td class="areaCell" data-label="Area">EXECUTIVE SUMMARY</td>
+          <td class="sectionCell" data-label="Section">Business Description</td>
+          <td data-label="What you’re proving">Reader understands what you sell, why it matters, and what’s unique.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="es-bd-1" type="checkbox" />
+                  <label for="es-bd-1">Explain what you sell (product/service), why it’s valuable, and what makes it unique.</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" type="button" data-open="how" data-id="es-bd-1" aria-label="How to check">🛈</button>
+                  <button class="iconBtn" type="button" data-open="res" data-id="es-bd-1" aria-label="Resources">🔗</button>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="item-left">
+                  <input id="es-bd-2" type="checkbox" />
+                  <label for="es-bd-2">State where you operate (Kelowna/BC/Canada) and who your ideal customer is.</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" type="button" data-open="how" data-id="es-bd-2">🛈</button>
+                  <button class="iconBtn" type="button" data-open="res" data-id="es-bd-2">🔗</button>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="item-left">
+                  <input id="es-bd-3" type="checkbox" />
+                  <label for="es-bd-3">Highlight progress/achievements so far (research, pilot, early sales, partnerships, prototypes).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" type="button" data-open="how" data-id="es-bd-3">🛈</button>
+                  <button class="iconBtn" type="button" data-open="res" data-id="es-bd-3">🔗</button>
+                </div>
+              </div>
+            </div>
+            <div class="hint">Tip: Keep this section to 1–2 pages and update it after the full plan is drafted.</div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="areaCell" data-label="Area">EXECUTIVE SUMMARY</td>
+          <td class="sectionCell" data-label="Section">Market Opportunity</td>
+          <td data-label="What you’re proving">There is demand; you understand the market and competitors.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="es-mo-1" type="checkbox" />
+                  <label for="es-mo-1">Summarize demand using data/trends/industry insights (prefer BC + local when possible).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="es-mo-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="es-mo-1" type="button">🔗</button>
+                </div>
+              </div>
+              <div class="item">
+                <div class="item-left">
+                  <input id="es-mo-2" type="checkbox" />
+                  <label for="es-mo-2">Briefly describe your target market and why they will buy from you.</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="es-mo-2" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="es-mo-2" type="button">🔗</button>
+                </div>
+              </div>
+              <div class="item">
+                <div class="item-left">
+                  <input id="es-mo-3" type="checkbox" />
+                  <label for="es-mo-3">Name 3–5 competitors (Kelowna first) and one clear reason you will win.</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="es-mo-3" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="es-mo-3" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="areaCell" data-label="Area">EXECUTIVE SUMMARY</td>
+          <td class="sectionCell" data-label="Section">Marketing Activities</td>
+          <td data-label="What you’re proving">You have a realistic customer acquisition and retention plan.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="es-ma-1" type="checkbox" />
+                  <label for="es-ma-1">Explain how you’ll reach customers (channels) and why those channels match your audience.</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="es-ma-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="es-ma-1" type="button">🔗</button>
+                </div>
+              </div>
+              <div class="item">
+                <div class="item-left">
+                  <input id="es-ma-2" type="checkbox" />
+                  <label for="es-ma-2">List 3–6 specific marketing activities (not just “social media”).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="es-ma-2" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="es-ma-2" type="button">🔗</button>
+                </div>
+              </div>
+              <div class="item">
+                <div class="item-left">
+                  <input id="es-ma-3" type="checkbox" />
+                  <label for="es-ma-3">Explain how you’ll retain customers (follow-up, loyalty/referrals, after-sales support).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="es-ma-3" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="es-ma-3" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="areaCell" data-label="Area">EXECUTIVE SUMMARY</td>
+          <td class="sectionCell" data-label="Section">Operations</td>
+          <td data-label="What you’re proving">Your day-to-day operations are feasible and organized.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="es-op-1" type="checkbox" />
+                  <label for="es-op-1">Describe how the business runs day-to-day (people, place, process, systems).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="es-op-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="es-op-1" type="button">🔗</button>
+                </div>
+              </div>
+              <div class="item">
+                <div class="item-left">
+                  <input id="es-op-2" type="checkbox" />
+                  <label for="es-op-2">Name your location model (home-based, commercial space, mobile, online) and key policies.</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="es-op-2" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="es-op-2" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="areaCell" data-label="Area">EXECUTIVE SUMMARY</td>
+          <td class="sectionCell" data-label="Section">Financial Summary</td>
+          <td data-label="What you’re proving">Numbers are realistic (revenue, expenses, breakeven).</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="es-fin-1" type="checkbox" />
+                  <label for="es-fin-1">Include 1st-year projected revenue, expenses, and profit/loss (high-level).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="es-fin-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="es-fin-1" type="button">🔗</button>
+                </div>
+              </div>
+              <div class="item">
+                <div class="item-left">
+                  <input id="es-fin-2" type="checkbox" />
+                  <label for="es-fin-2">State your breakeven expectation (when revenue covers monthly costs).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="es-fin-2" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="es-fin-2" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+            <div class="hint">Note: A complete plan should include a cashflow forecast (often 24–36 months).</div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="areaCell" data-label="Area">EXECUTIVE SUMMARY</td>
+          <td class="sectionCell" data-label="Section">The Ask</td>
+          <td data-label="What you’re proving">If you need funding, it’s clear and well-justified.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="es-ask-1" type="checkbox" />
+                  <label for="es-ask-1">State how much you need, what it will be used for, and your owner contribution.</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="es-ask-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="es-ask-1" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- ===================== BUSINESS DESCRIPTION ===================== -->
+        <tr>
+          <td class="areaCell" data-label="Area">BUSINESS DESCRIPTION</td>
+          <td class="sectionCell" data-label="Section">Business Description</td>
+          <td data-label="What you’re proving">You are clear, credible, and launch timing makes sense.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="bd-1" type="checkbox" />
+                  <label for="bd-1">Include legal business name (or planned name) and business structure (sole prop/partnership/corp).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="bd-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="bd-1" type="button">🔗</button>
+                </div>
+              </div>
+              <div class="item">
+                <div class="item-left">
+                  <input id="bd-2" type="checkbox" />
+                  <label for="bd-2">Explain why you’re starting this business and why now is the right time (BC/Kelowna context).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="bd-2" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="bd-2" type="button">🔗</button>
+                </div>
+              </div>
+              <div class="item">
+                <div class="item-left">
+                  <input id="bd-3" type="checkbox" />
+                  <label for="bd-3">Explain why you believe it will succeed (clear advantage + proof, not only hope).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="bd-3" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="bd-3" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="areaCell" data-label="Area">BUSINESS DESCRIPTION</td>
+          <td class="sectionCell" data-label="Section">Ownership & Management Team</td>
+          <td data-label="What you’re proving">The team has the skills to execute; gaps are addressed.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="team-1" type="checkbox" />
+                  <label for="team-1">Briefly describe each owner/manager (experience, qualifications, and relevant skills).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="team-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="team-1" type="button">🔗</button>
+                </div>
+              </div>
+              <div class="item">
+                <div class="item-left">
+                  <input id="team-2" type="checkbox" />
+                  <label for="team-2">Connect each person’s background to business needs (sales, ops, finance, marketing).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="team-2" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="team-2" type="button">🔗</button>
+                </div>
+              </div>
+              <div class="item">
+                <div class="item-left">
+                  <input id="team-3" type="checkbox" />
+                  <label for="team-3">Identify gaps and how you will fill them (hire, contractor, mentor, training).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="team-3" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="team-3" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+            <div class="hint">Tip: If a task is assigned to “everyone,” it often gets completed by no one.</div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="areaCell" data-label="Area">BUSINESS DESCRIPTION</td>
+          <td class="sectionCell" data-label="Section">Products & Services</td>
+          <td data-label="What you’re proving">What you sell is clear, differentiated, and valuable.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="ps-1" type="checkbox" />
+                  <label for="ps-1">Describe your offers and what makes them unique/different from alternatives.</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="ps-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="ps-1" type="button">🔗</button>
+                </div>
+              </div>
+              <div class="item">
+                <div class="item-left">
+                  <input id="ps-2" type="checkbox" />
+                  <label for="ps-2">Explain benefits (customer outcomes) — not just features.</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="ps-2" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="ps-2" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="areaCell" data-label="Area">BUSINESS DESCRIPTION</td>
+          <td class="sectionCell" data-label="Section">Mission & Vision</td>
+          <td data-label="What you’re proving">Purpose is clear and consistent with strategy.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="mv-1" type="checkbox" />
+                  <label for="mv-1">Write a mission statement (objectives + how you achieve them).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="mv-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="mv-1" type="button">🔗</button>
+                </div>
+              </div>
+              <div class="item">
+                <div class="item-left">
+                  <input id="mv-2" type="checkbox" />
+                  <label for="mv-2">Write a vision statement (long-term goals and future impact).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="mv-2" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="mv-2" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="areaCell" data-label="Area">BUSINESS DESCRIPTION</td>
+          <td class="sectionCell" data-label="Section">Progress & Status</td>
+          <td data-label="What you’re proving">You’ve taken concrete steps; the business is underway.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="prog-1" type="checkbox" />
+                  <label for="prog-1">Summarize steps taken (research, development, equipment, partnerships, early sales).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="prog-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="prog-1" type="button">🔗</button>
+                </div>
+              </div>
+              <div class="item">
+                <div class="item-left">
+                  <input id="prog-2" type="checkbox" />
+                  <label for="prog-2">Include proof where possible (screenshots, quotes, invoices, LOIs, waitlists).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="prog-2" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="prog-2" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="areaCell" data-label="Area">BUSINESS DESCRIPTION</td>
+          <td class="sectionCell" data-label="Section">Goals & Milestones</td>
+          <td data-label="What you’re proving">You have a roadmap using SMART goals and timelines.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="goals-1" type="checkbox" />
+                  <label for="goals-1">Create SMART goals (Specific, Measurable, Achievable, Relevant, Time-based).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="goals-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="goals-1" type="button">🔗</button>
+                </div>
+              </div>
+              <div class="item">
+                <div class="item-left">
+                  <input id="goals-2" type="checkbox" />
+                  <label for="goals-2">Organize goals by short-term (0–6 months), medium (1–2 years), long-term (5–10 years).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="goals-2" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="goals-2" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- ===================== MARKET RESEARCH ===================== -->
+        <tr>
+          <td class="areaCell" data-label="Area">MARKET RESEARCH</td>
+          <td class="sectionCell" data-label="Section">Industry Overview</td>
+          <td data-label="What you’re proving">You understand how the industry works and your segment.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="ind-1" type="checkbox" />
+                  <label for="ind-1">Define your industry segment clearly (and keep it relevant to BC/Kelowna).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="ind-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="ind-1" type="button">🔗</button>
+                </div>
+              </div>
+              <div class="item">
+                <div class="item-left">
+                  <input id="ind-2" type="checkbox" />
+                  <label for="ind-2">Explain industry structure (key players, dynamics, supply chain, how money flows).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="ind-2" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="ind-2" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+            <div class="hint">Use local or BC-relevant stats where possible (avoid unrelated global numbers).</div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="areaCell" data-label="Area">MARKET RESEARCH</td>
+          <td class="sectionCell" data-label="Section">Trend Analysis</td>
+          <td data-label="What you’re proving">You know what’s changing and how you will respond.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="trend-1" type="checkbox" />
+                  <label for="trend-1">Identify key trends (tech, economic, social/lifestyle, regulatory) impacting your industry.</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="trend-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="trend-1" type="button">🔗</button>
+                </div>
+              </div>
+              <div class="item">
+                <div class="item-left">
+                  <input id="trend-2" type="checkbox" />
+                  <label for="trend-2">Explain how your business will benefit or adapt (strategy, pricing, operations, channel changes).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="trend-2" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="trend-2" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="areaCell" data-label="Area">MARKET RESEARCH</td>
+          <td class="sectionCell" data-label="Section">Target Market — Demographics</td>
+          <td data-label="What you’re proving">You can define who buys, where they are, and how many.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="demo-1" type="checkbox" />
+                  <label for="demo-1">Clarify B2C vs B2B (or both) and define each segment separately.</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="demo-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="demo-1" type="button">🔗</button>
+                </div>
+              </div>
+              <div class="item">
+                <div class="item-left">
+                  <input id="demo-2" type="checkbox" />
+                  <label for="demo-2">Provide demographic profile (B2C) or firmographic profile (B2B) relevant to Kelowna/BC.</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="demo-2" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="demo-2" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="areaCell" data-label="Area">MARKET RESEARCH</td>
+          <td class="sectionCell" data-label="Section">Psychographic & Purchase Preferences</td>
+          <td data-label="What you’re proving">You understand motivations, objections, and buying behavior.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="psy-1" type="checkbox" />
+                  <label for="psy-1">Describe values, lifestyle, attitudes, and what drives purchase decisions.</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="psy-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="psy-1" type="button">🔗</button>
+                </div>
+              </div>
+              <div class="item">
+                <div class="item-left">
+                  <input id="psy-2" type="checkbox" />
+                  <label for="psy-2">List purchase preferences: research habits, price sensitivity, channel preference, review influence.</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="psy-2" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="psy-2" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="areaCell" data-label="Area">MARKET RESEARCH</td>
+          <td class="sectionCell" data-label="Section">Customer Persona</td>
+          <td data-label="What you’re proving">You can describe a realistic ideal customer profile.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="per-1" type="checkbox" />
+                  <label for="per-1">Create at least one persona per target segment (specific, realistic, and decision-focused).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="per-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="per-1" type="button">🔗</button>
+                </div>
+              </div>
+              <div class="item">
+                <div class="item-left">
+                  <input id="per-2" type="checkbox" />
+                  <label for="per-2">Include pain points, triggers, objections, and “where they hang out” (channels).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="per-2" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="per-2" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="areaCell" data-label="Area">MARKET RESEARCH</td>
+          <td class="sectionCell" data-label="Section">Competitive Analysis</td>
+          <td data-label="What you’re proving">You understand competitor strengths/weaknesses and your opportunity.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="comp-1" type="checkbox" />
+                  <label for="comp-1">Identify 3–5 relevant competitors and describe their business briefly.</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="comp-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="comp-1" type="button">🔗</button>
+                </div>
+              </div>
+              <div class="item">
+                <div class="item-left">
+                  <input id="comp-2" type="checkbox" />
+                  <label for="comp-2">Assess strengths and weaknesses (pricing, reviews, quality, speed, customer experience).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="comp-2" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="comp-2" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- ===================== MARKETING AND SALES STRATEGIES ===================== -->
+        <tr>
+          <td class="areaCell" data-label="Area">MARKETING & SALES</td>
+          <td class="sectionCell" data-label="Section">SWOT Analysis</td>
+          <td data-label="What you’re proving">You can plan with reality: internal + external factors.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="swot-1" type="checkbox" />
+                  <label for="swot-1">Complete SWOT (Strengths, Weaknesses, Opportunities, Threats) with 3+ items each.</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="swot-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="swot-1" type="button">🔗</button>
+                </div>
+              </div>
+              <div class="item">
+                <div class="item-left">
+                  <input id="swot-2" type="checkbox" />
+                  <label for="swot-2">Turn SWOT into actions (what you will do next based on it).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="swot-2" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="swot-2" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="areaCell" data-label="Area">MARKETING & SALES</td>
+          <td class="sectionCell" data-label="Section">Unique Selling Proposition</td>
+          <td data-label="What you’re proving">Customers have a reason to choose you over alternatives.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="usp-1" type="checkbox" />
+                  <label for="usp-1">Write a clear USP (benefit + differentiator + proof).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="usp-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="usp-1" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="areaCell" data-label="Area">MARKETING & SALES</td>
+          <td class="sectionCell" data-label="Section">Pricing Strategy</td>
+          <td data-label="What you’re proving">Pricing is sustainable and fits your market.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="price-1" type="checkbox" />
+                  <label for="price-1">Choose a pricing method (cost-plus, competitor-based, value-based) and explain why it fits.</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="price-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="price-1" type="button">🔗</button>
+                </div>
+              </div>
+              <div class="item">
+                <div class="item-left">
+                  <input id="price-2" type="checkbox" />
+                  <label for="price-2">List base price and any variations (discounts, memberships, bulk, financing, pre-orders).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="price-2" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="price-2" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="areaCell" data-label="Area">MARKETING & SALES</td>
+          <td class="sectionCell" data-label="Section">Distribution Strategy</td>
+          <td data-label="What you’re proving">How your offer reaches customers is practical and costed.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="dist-1" type="checkbox" />
+                  <label for="dist-1">Define distribution method(s): direct, online, retail/wholesale, distributors, partner networks.</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="dist-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="dist-1" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="areaCell" data-label="Area">MARKETING & SALES</td>
+          <td class="sectionCell" data-label="Section">Marketing Channels</td>
+          <td data-label="What you’re proving">Your channels match the sales cycle and are specific.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="chan-1" type="checkbox" />
+                  <label for="chan-1">List channels with detail (e.g., “Instagram Reels demos” not “social media”).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="chan-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="chan-1" type="button">🔗</button>
+                </div>
+              </div>
+              <div class="item">
+                <div class="item-left">
+                  <input id="chan-2" type="checkbox" />
+                  <label for="chan-2">Map channels to stages: awareness → evaluation → purchase → delivery → after-sales.</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="chan-2" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="chan-2" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="areaCell" data-label="Area">MARKETING & SALES</td>
+          <td class="sectionCell" data-label="Section">Messaging Strategy</td>
+          <td data-label="What you’re proving">Your message changes appropriately across the sales cycle.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="msg-1" type="checkbox" />
+                  <label for="msg-1">Define key messages for awareness, evaluation, purchase, delivery, and after-sales.</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="msg-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="msg-1" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- ===================== OPERATIONS ===================== -->
+        <tr>
+          <td class="areaCell" data-label="Area">OPERATIONS</td>
+          <td class="sectionCell" data-label="Section">Management and Team</td>
+          <td data-label="What you’re proving">Roles are clear; hiring needs are realistic.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="ops-team-1" type="checkbox" />
+                  <label for="ops-team-1">Define responsibilities for executive/team/staff/advisors (accountant/lawyer/mentor if used).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="ops-team-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="ops-team-1" type="button">🔗</button>
+                </div>
+              </div>
+              <div class="item">
+                <div class="item-left">
+                  <input id="ops-team-2" type="checkbox" />
+                  <label for="ops-team-2">State hiring needs (how many, which roles, when) and how you’ll recruit.</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="ops-team-2" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="ops-team-2" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="areaCell" data-label="Area">OPERATIONS</td>
+          <td class="sectionCell" data-label="Section">Location</td>
+          <td data-label="What you’re proving">Your space, permits, and customer experience are planned.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="loc-1" type="checkbox" />
+                  <label for="loc-1">Describe your workspace (even if not secured): features, renovations, customer visits, permits.</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="loc-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="loc-1" type="button">🔗</button>
+                </div>
+              </div>
+              <div class="item">
+                <div class="item-left">
+                  <input id="loc-2" type="checkbox" />
+                  <label for="loc-2">If online: cover platform/security, user experience, payments, shipping/support.</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="loc-2" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="loc-2" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="areaCell" data-label="Area">OPERATIONS</td>
+          <td class="sectionCell" data-label="Section">Systems</td>
+          <td data-label="What you’re proving">Tools support daily operations and record-keeping.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="sys-1" type="checkbox" />
+                  <label for="sys-1">List tools/software (payments, inventory, customer management, order fulfillment, online platforms).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="sys-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="sys-1" type="button">🔗</button>
+                </div>
+              </div>
+              <div class="item">
+                <div class="item-left">
+                  <input id="sys-2" type="checkbox" />
+                  <label for="sys-2">Explain what each system does and who owns weekly/monthly admin tasks.</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="sys-2" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="sys-2" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="areaCell" data-label="Area">OPERATIONS</td>
+          <td class="sectionCell" data-label="Section">Equipment</td>
+          <td data-label="What you’re proving">You know what equipment is needed and the costs are understood.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="equip-1" type="checkbox" />
+                  <label for="equip-1">List equipment needed to make the product or deliver the service (with quotes if possible).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="equip-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="equip-1" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="areaCell" data-label="Area">OPERATIONS</td>
+          <td class="sectionCell" data-label="Section">Regulatory / Training Requirements</td>
+          <td data-label="What you’re proving">You can legally operate and meet required training/coverage.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="reg-1" type="checkbox" />
+                  <label for="reg-1">Identify permits/licences/training needed (industry specific: food safe, WorkSafeBC, etc.).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="reg-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="reg-1" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+            <div class="hint">Use permit finder tools early so you don’t spend money on an unusable setup.</div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="areaCell" data-label="Area">OPERATIONS</td>
+          <td class="sectionCell" data-label="Section">Suppliers and Inventory</td>
+          <td data-label="What you’re proving">Supply chain is reliable; inventory is planned and costed.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="supp-1" type="checkbox" />
+                  <label for="supp-1">List key suppliers and what they provide; include typical order example and cost if inventory-based.</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="supp-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="supp-1" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="areaCell" data-label="Area">OPERATIONS</td>
+          <td class="sectionCell" data-label="Section">Production Processes</td>
+          <td data-label="What you’re proving">Order-to-delivery workflow is clear, efficient, and repeatable.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="proc-1" type="checkbox" />
+                  <label for="proc-1">Walk through the process: customer order → production/service → payment → delivery → follow-up.</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="proc-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="proc-1" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="areaCell" data-label="Area">OPERATIONS</td>
+          <td class="sectionCell" data-label="Section">Payments</td>
+          <td data-label="What you’re proving">Payment methods, terms, and tracking are defined.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="pay-1" type="checkbox" />
+                  <label for="pay-1">Explain how customers pay (card, e-transfer, cash, online) and any payment terms (deposits/net terms).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="pay-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="pay-1" type="button">🔗</button>
+                </div>
+              </div>
+              <div class="item">
+                <div class="item-left">
+                  <input id="pay-2" type="checkbox" />
+                  <label for="pay-2">Describe how you track payments and manage accounts receivable (late payments, reminders).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="pay-2" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="pay-2" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="areaCell" data-label="Area">OPERATIONS</td>
+          <td class="sectionCell" data-label="Section">Customer & Company Policies</td>
+          <td data-label="What you’re proving">Clear policies reduce risk and set expectations.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="pol-1" type="checkbox" />
+                  <label for="pol-1">Outline key policies (complaints, returns/refunds, scheduling/vacation if hiring).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="pol-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="pol-1" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- ===================== FINANCIALS ===================== -->
+        <tr>
+          <td class="areaCell" data-label="Area">FINANCIALS</td>
+          <td class="sectionCell" data-label="Section">Funding Request</td>
+          <td data-label="What you’re proving">Funding amount and use are clear and credible.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="fund-1" type="checkbox" />
+                  <label for="fund-1">State total funds needed, owner contribution, and what you’re requesting from others.</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="fund-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="fund-1" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+            <div class="hint">Your funding request should match your cashflow forecast and startup/working-capital needs.</div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="areaCell" data-label="Area">FINANCIALS</td>
+          <td class="sectionCell" data-label="Section">Start Up Costs</td>
+          <td data-label="What you’re proving">Upfront costs are complete and based on estimates/quotes.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="su-1" type="checkbox" />
+                  <label for="su-1">List major startup expenses required before opening and explain how you estimated each cost.</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="su-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="su-1" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="areaCell" data-label="Area">FINANCIALS</td>
+          <td class="sectionCell" data-label="Section">Overhead</td>
+          <td data-label="What you’re proving">Ongoing costs are realistic and explained.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="oh-1" type="checkbox" />
+                  <label for="oh-1">Describe regular expenses and where the numbers come from; explain any unusual figures.</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="oh-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="oh-1" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="areaCell" data-label="Area">FINANCIALS</td>
+          <td class="sectionCell" data-label="Section">Sales Forecast</td>
+          <td data-label="What you’re proving">Revenue assumptions are realistic and linked to capacity/marketing.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="sf-1" type="checkbox" />
+                  <label for="sf-1">Explain how you expect sales to grow and why your estimate is realistic (not best-case only).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="sf-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="sf-1" type="button">🔗</button>
+                </div>
+              </div>
+              <div class="item">
+                <div class="item-left">
+                  <input id="sf-2" type="checkbox" />
+                  <label for="sf-2">Ensure sales forecast matches marketing plan and cashflow forecast assumptions.</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="sf-2" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="sf-2" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="areaCell" data-label="Area">FINANCIALS</td>
+          <td class="sectionCell" data-label="Section">Breakeven</td>
+          <td data-label="What you’re proving">You know when you cover monthly operating costs.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="be-1" type="checkbox" />
+                  <label for="be-1">Show when revenue covers or exceeds monthly operating costs (breakeven month/volume).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="be-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="be-1" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="areaCell" data-label="Area">FINANCIALS</td>
+          <td class="sectionCell" data-label="Section">Sales History</td>
+          <td data-label="What you’re proving">If operating, you can show actual numbers and learning.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="hist-1" type="checkbox" />
+                  <label for="hist-1">If already operating: include past sales figures and total revenue to date (specific numbers).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="hist-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="hist-1" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="areaCell" data-label="Area">FINANCIALS</td>
+          <td class="sectionCell" data-label="Section">Risks</td>
+          <td data-label="What you’re proving">You have identified uncertainty and planned mitigations.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="risk-1" type="checkbox" />
+                  <label for="risk-1">Identify at least 3 risks (competition, sales, costs, team, regulation) and mitigation for each.</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="risk-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="risk-1" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="areaCell" data-label="Area">FINANCIALS</td>
+          <td class="sectionCell" data-label="Section">Backup Plan</td>
+          <td data-label="What you’re proving">If things go wrong, you can pivot or exit responsibly.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="bp-1" type="checkbox" />
+                  <label for="bp-1">Describe backup options (pivot product/service, adjust model, sell equipment/inventory, exit).</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="bp-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="bp-1" type="button">🔗</button>
+                </div>
+              </div>
+              <div class="item">
+                <div class="item-left">
+                  <input id="bp-2" type="checkbox" />
+                  <label for="bp-2">If you take debt: explain repayment strategy under a worst-case scenario.</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="bp-2" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="bp-2" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- ===================== APPENDICES ===================== -->
+        <tr>
+          <td class="areaCell" data-label="Area">APPENDICES</td>
+          <td class="sectionCell" data-label="Section">Appendices</td>
+          <td data-label="What you’re proving">You have supporting documents that make the plan credible.</td>
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="app-1" type="checkbox" />
+                  <label for="app-1">Prepare appendices: quotes, permits/licences, resumes, contracts/LOIs, insurance, market research, cashflow.</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" data-open="how" data-id="app-1" type="button">🛈</button>
+                  <button class="iconBtn" data-open="res" data-id="app-1" type="button">🔗</button>
+                </div>
+              </div>
+            </div>
+            <div class="hint">Best practice: Store appendices in a folder with clear filenames and dates.</div>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Learning Panel -->
+  <div class="drawerOverlay" id="drawerOverlay" aria-hidden="true"></div>
+  <aside class="drawer" id="drawer" aria-label="Learning panel" aria-hidden="true">
+    <div class="drawerHeader">
+      <div>
+        <h2 id="drawerTitle">Item details</h2>
+        <div class="drawerTag" id="drawerTag"></div>
+      </div>
+      <button class="closeBtn" id="closeBtn" type="button">Close</button>
+    </div>
+
+    <div class="tabs" role="tablist" aria-label="Panel tabs">
+      <button class="tab active" id="tabHow" type="button" role="tab" aria-selected="true">How to check</button>
+      <button class="tab" id="tabRes" type="button" role="tab" aria-selected="false">Resources</button>
+    </div>
+
+    <div class="drawerBody">
+      <div id="howPanel"></div>
+      <div id="resPanel" style="display:none;"></div>
+    </div>
+  </aside>
+
+  <script>
+    // NOTE:
+    // Keep your existing CONTENT object here from the previous file (unchanged).
+    // This HTML focuses on the requested structural update:
+    // split "Section (Template Subtitle)" into 2 columns: Area + Section.
+    //
+    // If you paste this into your previous file, KEEP your full CONTENT = {...} block.
+
+    /******************************************************************
+     * Per-item 🛈 "How to check" + 🔗 "Resources"
+     * (Paste your full CONTENT object from the prior version below)
+     ******************************************************************/
+    const CONTENT = {
+      // Minimal placeholder to avoid JS errors if you test this file alone.
+      // Replace with the full CONTENT object from the previous version.
+      "es-bd-1": { area:"EXECUTIVE SUMMARY • Business Description", question:"", title:"", how:[""], resources:[] }
+    };
+
+    /******************************************************************
+     * Drawer UI
+     ******************************************************************/
+    const drawer = document.getElementById("drawer");
+    const overlay = document.getElementById("drawerOverlay");
+    const closeBtn = document.getElementById("closeBtn");
+    const drawerTitle = document.getElementById("drawerTitle");
+    const drawerTag = document.getElementById("drawerTag");
+    const tabHow = document.getElementById("tabHow");
+    const tabRes = document.getElementById("tabRes");
+    const howPanel = document.getElementById("howPanel");
+    const resPanel = document.getElementById("resPanel");
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+    function renderHow(data){
+      const lis = (data.how || []).map(x => `<li>${escapeHtml(x)}</li>`).join("");
+      return `
+        <div class="panelBlock">
+          <div class="panelTitle">How to check</div>
+          <ul>${lis || "<li>No guidance yet.</li>"}</ul>
+        </div>
+      `;
+    }
+    function renderRes(data){
+      const links = (data.resources || []).map(r =>
+        `<div class="links"><a href="${escapeHtml(r.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(r.label)}</a></div>`
+      ).join("");
+      return `
+        <div class="panelBlock">
+          <div class="panelTitle">Resources</div>
+          ${links || `<div class="tiny">No links yet.</div>`}
+          <div class="hint">Links open in a new tab.</div>
+        </div>
+      `;
+    }
+    function setTab(which){
+      const isHow = which === "how";
+      tabHow.classList.toggle("active", isHow);
+      tabHow.setAttribute("aria-selected", isHow ? "true" : "false");
+      tabRes.classList.toggle("active", !isHow);
+      tabRes.setAttribute("aria-selected", !isHow ? "true" : "false");
+      howPanel.style.display = isHow ? "block" : "none";
+      resPanel.style.display = isHow ? "none" : "block";
+    }
+    function openDrawer(id, mode){
+      const data = CONTENT[id];
+      if(!data){
+        drawerTitle.textContent = "Item details";
+        drawerTag.textContent = "No content found for this item.";
+        howPanel.innerHTML = `<div class="panelBlock"><div class="panelTitle">How to check</div><div class="tiny">Please add guidance for this ID: ${escapeHtml(id)}</div></div>`;
+        resPanel.innerHTML = `<div class="panelBlock"><div class="panelTitle">Resources</div><div class="tiny">Please add links for this ID: ${escapeHtml(id)}</div></div>`;
+      } else {
+        drawerTitle.textContent = data.title || "Item details";
+        drawerTag.textContent = `${data.area || ""}${data.question ? " • " + data.question : ""}`;
+        howPanel.innerHTML = renderHow(data);
+        resPanel.innerHTML = renderRes(data);
+      }
+      setTab(mode === "res" ? "res" : "how");
+      drawer.classList.add("open");
+      overlay.classList.add("open");
+      drawer.setAttribute("aria-hidden", "false");
+      overlay.setAttribute("aria-hidden", "false");
+    }
+    function closeDrawer(){
+      drawer.classList.remove("open");
+      overlay.classList.remove("open");
+      drawer.setAttribute("aria-hidden", "true");
+      overlay.setAttribute("aria-hidden", "true");
+    }
+    document.querySelectorAll("button[data-open]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        openDrawer(btn.getAttribute("data-id"), btn.getAttribute("data-open"));
+      });
+    });
+    tabHow.addEventListener("click", () => setTab("how"));
+    tabRes.addEventListener("click", () => setTab("res"));
+    closeBtn.addEventListener("click", closeDrawer);
+    overlay.addEventListener("click", closeDrawer);
+    document.addEventListener("keydown", (e) => {
+      if(e.key === "Escape") closeDrawer();
+    });
+
+    /******************************************************************
+     * Checkbox persistence + progress
+     ******************************************************************/
+    const STORAGE_KEY = "businessPlanChecklist_templateAligned_v2_areaSectionColumns";
+    const saveStatus = document.getElementById("saveStatus");
+    const barFill = document.getElementById("barFill");
+    const pctText = document.getElementById("pctText");
+    const countText = document.getElementById("countText");
+    const btnSave = document.getElementById("btnSave");
+    const btnReset = document.getElementById("btnReset");
+    const btnExport = document.getElementById("btnExport");
+
+    function allCheckboxes(){
+      return Array.from(document.querySelectorAll('input[type="checkbox"]'));
+    }
+    function computeProgress(){
+      const boxes = allCheckboxes();
+      const total = boxes.length;
+      const checked = boxes.filter(b => b.checked).length;
+      const pct = total === 0 ? 0 : Math.round((checked / total) * 100);
+      barFill.style.width = pct + "%";
+      pctText.textContent = pct + "%";
+      countText.textContent = `${checked}/${total}`;
+    }
+    function loadState(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return;
+        const state = JSON.parse(raw);
+        allCheckboxes().forEach(cb => {
+          if(Object.prototype.hasOwnProperty.call(state, cb.id)) cb.checked = !!state[cb.id];
+        });
+      }catch(err){}
+      computeProgress();
+    }
+    function saveState(showToast=true){
+      const state = {};
+      allCheckboxes().forEach(cb => state[cb.id] = cb.checked);
+      try{
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        if(showToast){
+          const t = new Date();
+          saveStatus.textContent = `Saved at ${t.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}`;
+          setTimeout(() => { saveStatus.textContent = ""; }, 2500);
+        }
+      }catch(err){
+        if(showToast){
+          saveStatus.textContent = "Could not save (storage blocked).";
+          setTimeout(() => { saveStatus.textContent = ""; }, 2500);
+        }
+      }
+    }
+    function resetAll(){
+      allCheckboxes().forEach(cb => cb.checked = false);
+      saveState(false);
+      computeProgress();
+      saveStatus.textContent = "Reset complete.";
+      setTimeout(() => { saveStatus.textContent = ""; }, 2500);
+    }
+    function exportSummary(){
+      const boxes = allCheckboxes();
+      const checked = boxes.filter(b => b.checked).map(b => {
+        const label = document.querySelector(`label[for="${b.id}"]`);
+        return label ? label.textContent.trim() : b.id;
+      });
+      const unchecked = boxes.filter(b => !b.checked).map(b => {
+        const label = document.querySelector(`label[for="${b.id}"]`);
+        return label ? label.textContent.trim() : b.id;
+      });
+
+      const lines = [];
+      lines.push("Business Plan Checklist Summary (Canada | BC | Kelowna)");
+      lines.push("========================================================");
+      lines.push("");
+      lines.push(`Checked (${checked.length}):`);
+      checked.forEach(x => lines.push(`- [x] ${x}`));
+      lines.push("");
+      lines.push(`Unchecked (${unchecked.length}):`);
+      unchecked.forEach(x => lines.push(`- [ ] ${x}`));
+
+      const blob = new Blob([lines.join("\n")], {type:"text/plain;charset=utf-8"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "business-plan-checklist-summary.txt";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    // Auto-save on change
+    allCheckboxes().forEach(cb => {
+      cb.addEventListener("change", () => {
+        computeProgress();
+        saveState(false);
+      });
+    });
+
+    btnSave.addEventListener("click", () => saveState(true));
+    btnReset.addEventListener("click", resetAll);
+    btnExport.addEventListener("click", exportSummary);
+
+    loadState();
+  </script>
+</body>
+</html>

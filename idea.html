@@ -1,0 +1,893 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Business Readiness Checklist</title>
+  <style>
+    :root{
+      --border:#e5e7eb;
+      --text:#111827;
+      --muted:#6b7280;
+      --bg:#ffffff;
+      --bg2:#f9fafb;
+      --card:#ffffff;
+      --shadow: 0 8px 24px rgba(17,24,39,.08);
+      --radius: 14px;
+      --accent:#2563eb;
+      --panel:#f8fafc;
+    }
+    body{
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      margin: 24px;
+      color: var(--text);
+      background: var(--bg);
+    }
+    h1{
+      font-size: 1.25rem;
+      margin: 0 0 6px;
+    }
+    .sub{
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    /* Desktop/tablet: classic table */
+    .table-wrap{
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--bg);
+      box-shadow: var(--shadow);
+    }
+    table{
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 840px;
+    }
+    thead th{
+      text-align: left;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 12px 14px;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+    tbody td{
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      font-size: 0.95rem;
+    }
+    tbody tr:last-child td{
+      border-bottom: none;
+    }
+
+    /* Checklist styling */
+    .items{
+      display: grid;
+      gap: 10px;
+    }
+    .item{
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      line-height: 1.35;
+    }
+    .item-left{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      min-width: 0;
+    }
+    .item input[type="checkbox"]{
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      accent-color: var(--accent);
+      flex: 0 0 auto;
+      cursor: pointer;
+    }
+    .item label{
+      cursor: pointer;
+      display:block;
+    }
+    .item-tools{
+      display:flex;
+      gap:8px;
+      flex: 0 0 auto;
+    }
+    .iconBtn{
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #fff;
+      cursor: pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-size: 16px;
+      line-height: 1;
+    }
+    .iconBtn:hover{
+      border-color: #cbd5e1;
+      background: #f9fafb;
+    }
+    .iconBtn:focus{
+      outline: 2px solid rgba(37,99,235,.25);
+      outline-offset: 2px;
+    }
+    .hint{
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+    .tiny{
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    /* Drawer (learning panel) */
+    .drawerOverlay{
+      position:fixed;
+      inset:0;
+      background: rgba(17,24,39,.35);
+      display:none;
+      z-index:50;
+    }
+    .drawerOverlay.open{ display:block; }
+    .drawer{
+      position:fixed;
+      top:0;
+      right:0;
+      height:100%;
+      width:min(520px, 92vw);
+      background:#fff;
+      box-shadow: var(--shadow);
+      transform: translateX(105%);
+      transition: transform .18s ease;
+      z-index:60;
+      display:flex;
+      flex-direction:column;
+    }
+    .drawer.open{ transform: translateX(0); }
+    .drawerHeader{
+      padding:14px;
+      border-bottom:1px solid var(--border);
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .drawerHeader h2{
+      margin:0;
+      font-size: 1rem;
+      line-height:1.25;
+    }
+    .drawerTag{
+      margin-top:6px;
+      font-size:0.85rem;
+      color: var(--muted);
+    }
+    .closeBtn{
+      border:1px solid var(--border);
+      background:#fff;
+      border-radius: 10px;
+      padding:8px 10px;
+      cursor:pointer;
+    }
+    .tabs{
+      display:flex;
+      gap:8px;
+      padding:10px 14px;
+      border-bottom:1px solid var(--border);
+      background: var(--panel);
+    }
+    .tab{
+      border:1px solid var(--border);
+      background:#fff;
+      border-radius: 999px;
+      padding:7px 10px;
+      font-size:0.9rem;
+      cursor:pointer;
+    }
+    .tab.active{
+      border-color: rgba(37,99,235,.35);
+      background: rgba(37,99,235,.08);
+      color: var(--accent);
+      font-weight:700;
+    }
+    .drawerBody{
+      padding: 12px 14px 18px;
+      overflow:auto;
+    }
+    .section{
+      border:1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 10px;
+      background:#fff;
+    }
+    .sectionTitle{
+      margin:0 0 8px 0;
+      font-size: 0.82rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      font-weight: 800;
+    }
+    ul{
+      margin:0;
+      padding-left: 18px;
+    }
+    li{ margin: 6px 0; }
+    .links a{
+      display:block;
+      margin: 6px 0;
+      word-break: break-word;
+    }
+
+    /* Mobile: cards */
+    @media (max-width: 640px){
+      .table-wrap{
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        overflow: visible;
+      }
+      table{
+        min-width: 0;
+      }
+      thead{
+        display: none;
+      }
+      tbody, tr, td{
+        display: block;
+        width: 100%;
+      }
+      tbody tr{
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        margin-bottom: 12px;
+        background: var(--card);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+      tbody td{
+        border: none;
+        border-bottom: 1px solid var(--border);
+        padding: 12px 14px;
+      }
+      tbody td:last-child{
+        border-bottom: none;
+      }
+      td::before{
+        content: attr(data-label);
+        display: block;
+        font-weight: 700;
+        font-size: 0.85rem;
+        color: var(--muted);
+        margin-bottom: 6px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Validate Business Idea Checklist</h1>
+  <p class="sub">
+    Each row groups the same <b>Area</b> and <b>Question</b>.
+    Please tick the box if this item applies to you.
+    Click <b>🛈</b> for “How to check” and <b>🔗</b> for “Resources”.
+  </p>
+
+  <div class="table-wrap" role="region" aria-label="Business Readiness Checklist Table" tabindex="0">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:18%">Area</th>
+          <th style="width:28%">Question</th>
+          <th>Checklist Items</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <!-- Idea Feasibility -->
+        <tr>
+          <td data-label="Area">Idea Feasibility</td>
+          <td data-label="Question">Is your idea feasible?</td>
+
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="feasible-1" type="checkbox" />
+                  <label for="feasible-1">The business is legal</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" type="button" data-open="how" data-id="legal" aria-label="How to check: The business is legal">🛈</button>
+                  <button class="iconBtn" type="button" data-open="res" data-id="legal" aria-label="Resources: The business is legal">🔗</button>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="item-left">
+                  <input id="feasible-2" type="checkbox" />
+                  <label for="feasible-2">You can perform the duties required</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" type="button" data-open="how" data-id="duties" aria-label="How to check: You can perform the duties required">🛈</button>
+                  <button class="iconBtn" type="button" data-open="res" data-id="duties" aria-label="Resources: You can perform the duties required">🔗</button>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="item-left">
+                  <input id="feasible-3" type="checkbox" />
+                  <label for="feasible-3">You have the necessary skills and qualifications</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" type="button" data-open="how" data-id="skills" aria-label="How to check: Skills and qualifications">🛈</button>
+                  <button class="iconBtn" type="button" data-open="res" data-id="skills" aria-label="Resources: Skills and qualifications">🔗</button>
+                </div>
+              </div>
+            </div>
+            <div class="hint">Tip: If your business involves food, childcare, transportation, or health services, licensing requirements are usually stricter.</div>
+          </td>
+        </tr>
+
+        <!-- Market -->
+        <tr>
+          <td data-label="Area">Market</td>
+          <td data-label="Question">Is there a market?</td>
+
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="market-1" type="checkbox" />
+                  <label for="market-1">Conduct market research</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" type="button" data-open="how" data-id="research" aria-label="How to check: Conduct market research">🛈</button>
+                  <button class="iconBtn" type="button" data-open="res" data-id="research" aria-label="Resources: Conduct market research">🔗</button>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="item-left">
+                  <input id="market-2" type="checkbox" />
+                  <label for="market-2">Identify your target customer</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" type="button" data-open="how" data-id="target" aria-label="How to check: Identify your target customer">🛈</button>
+                  <button class="iconBtn" type="button" data-open="res" data-id="target" aria-label="Resources: Identify your target customer">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- Competition -->
+        <tr>
+          <td data-label="Area">Competition</td>
+          <td data-label="Question">Can you take on the competition?</td>
+
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="comp-1" type="checkbox" />
+                  <label for="comp-1">Identify your main competitors</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" type="button" data-open="how" data-id="competitors" aria-label="How to check: Identify competitors">🛈</button>
+                  <button class="iconBtn" type="button" data-open="res" data-id="competitors" aria-label="Resources: Identify competitors">🔗</button>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="item-left">
+                  <input id="comp-2" type="checkbox" />
+                  <label for="comp-2">Develop your competitive advantage</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" type="button" data-open="how" data-id="advantage" aria-label="How to check: Competitive advantage">🛈</button>
+                  <button class="iconBtn" type="button" data-open="res" data-id="advantage" aria-label="Resources: Competitive advantage">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- Finance -->
+        <tr>
+          <td data-label="Area">Finance</td>
+          <td data-label="Question">Can you afford to start?</td>
+
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="finance-1" type="checkbox" />
+                  <label for="finance-1">Understand start-up costs</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" type="button" data-open="how" data-id="startup-costs" aria-label="How to check: Start-up costs">🛈</button>
+                  <button class="iconBtn" type="button" data-open="res" data-id="startup-costs" aria-label="Resources: Start-up costs">🔗</button>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="item-left">
+                  <input id="finance-2" type="checkbox" />
+                  <label for="finance-2">Understand working capital needs</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" type="button" data-open="how" data-id="working-capital" aria-label="How to check: Working capital needs">🛈</button>
+                  <button class="iconBtn" type="button" data-open="res" data-id="working-capital" aria-label="Resources: Working capital needs">🔗</button>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="item-left">
+                  <input id="finance-3" type="checkbox" />
+                  <label for="finance-3">Know your funding or financing options</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" type="button" data-open="how" data-id="funding" aria-label="How to check: Funding options">🛈</button>
+                  <button class="iconBtn" type="button" data-open="res" data-id="funding" aria-label="Resources: Funding options">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- Compliance -->
+        <tr>
+          <td data-label="Area">Compliance</td>
+          <td data-label="Question">Can your business comply?</td>
+
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="compliance-1" type="checkbox" />
+                  <label for="compliance-1">Consult your local municipal office on regulations and licensing requirements</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" type="button" data-open="how" data-id="municipal" aria-label="How to check: Municipal licensing">🛈</button>
+                  <button class="iconBtn" type="button" data-open="res" data-id="municipal" aria-label="Resources: Municipal licensing">🔗</button>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="item-left">
+                  <input id="compliance-2" type="checkbox" />
+                  <label for="compliance-2">Check that your business won’t violate zoning or land-use bylaws</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" type="button" data-open="how" data-id="zoning" aria-label="How to check: Zoning and land-use">🛈</button>
+                  <button class="iconBtn" type="button" data-open="res" data-id="zoning" aria-label="Resources: Zoning and land-use">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- Sales Readiness -->
+        <tr>
+          <td data-label="Area">Sales Readiness</td>
+          <td data-label="Question">Are you confident you’ll get sales straight away?</td>
+
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="sales-1" type="checkbox" />
+                  <label for="sales-1">Try to secure guaranteed work before you start</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" type="button" data-open="how" data-id="guaranteed-work" aria-label="How to check: Secure early work">🛈</button>
+                  <button class="iconBtn" type="button" data-open="res" data-id="guaranteed-work" aria-label="Resources: Secure early work">🔗</button>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="item-left">
+                  <input id="sales-2" type="checkbox" />
+                  <label for="sales-2">Have a marketing plan and sales channels ready so you can get customers immediately</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" type="button" data-open="how" data-id="channels" aria-label="How to check: Marketing channels">🛈</button>
+                  <button class="iconBtn" type="button" data-open="res" data-id="channels" aria-label="Resources: Marketing channels">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- Final Check -->
+        <tr>
+          <td data-label="Area">Final Check</td>
+          <td data-label="Question">Do you have what it takes?</td>
+
+          <td data-label="Checklist Items">
+            <div class="items">
+              <div class="item">
+                <div class="item-left">
+                  <input id="final-1" type="checkbox" />
+                  <label for="final-1">If you have everything above covered, you’re on the right path</label>
+                </div>
+                <div class="item-tools">
+                  <button class="iconBtn" type="button" data-open="how" data-id="final" aria-label="How to check: Final review">🛈</button>
+                  <button class="iconBtn" type="button" data-open="res" data-id="final" aria-label="Resources: Final review">🔗</button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <p class="sub" style="margin-top:12px;">
+    Helpful reading:
+    <a href="https://blog.canadastartups.org/articles/how-to-start-a-business-with-no-money-in-canada" target="_blank" rel="noopener noreferrer">
+      How to start a business with no money (Canada)
+    </a>
+  </p>
+
+  <!-- Learning Panel -->
+  <div class="drawerOverlay" id="drawerOverlay" aria-hidden="true"></div>
+  <aside class="drawer" id="drawer" aria-label="Learning panel" aria-hidden="true">
+    <div class="drawerHeader">
+      <div>
+        <h2 id="drawerTitle">Item details</h2>
+        <div class="drawerTag" id="drawerTag"></div>
+      </div>
+      <button class="closeBtn" id="closeBtn" type="button">Close</button>
+    </div>
+
+    <div class="tabs" role="tablist" aria-label="Panel tabs">
+      <button class="tab active" id="tabHow" type="button" role="tab" aria-selected="true">How to check</button>
+      <button class="tab" id="tabRes" type="button" role="tab" aria-selected="false">Resources</button>
+    </div>
+
+    <div class="drawerBody">
+      <div id="howPanel"></div>
+      <div id="resPanel" style="display:none;"></div>
+    </div>
+  </aside>
+
+  <script>
+    /******************************************************************
+     * Learning content + links (Canada / BC / Kelowna)
+     ******************************************************************/
+    const CONTENT = {
+      legal: {
+        area: "Idea Feasibility",
+        question: "Is your idea feasible?",
+        title: "The business is legal",
+        how: [
+          "Describe your business in 1 sentence (what you do + where + for whom).",
+          "Use BizPaL to see permits/licences required for your activity and location.",
+          "Check if your industry has special rules (food, childcare, transportation, health services).",
+          "If you will hire anyone, review WorkSafeBC employer responsibilities."
+        ],
+        resources: [
+          { label: "BizPaL (permits & licences finder)", url: "https://bizpal.ca/" },
+          { label: "BC: Permits & licences (overview)", url: "https://www2.gov.bc.ca/gov/content/employment-business/business/managing-a-business/starting-a-business/permits-licences" },
+          { label: "WorkSafeBC: Small businesses", url: "https://www.worksafebc.com/en/for-employers/small-businesses" },
+          { label: "WorkSafeBC: Employers' responsibilities", url: "https://www.worksafebc.com/en/insurance/need-coverage/employers-responsibilities" }
+        ]
+      },
+
+      duties: {
+        area: "Idea Feasibility",
+        question: "Is your idea feasible?",
+        title: "You can perform the duties required",
+        how: [
+          "Write a 'day-in-the-life' list: sales, delivery, admin, customer service, bookkeeping.",
+          "Estimate weekly hours for the first 8–12 weeks (include evenings/weekends).",
+          "List tasks you cannot do yet and plan training or outsourcing.",
+          "Test it with a 1–2 week pilot and track time + energy."
+        ],
+        resources: [
+          { label: "BC: Business plan guide", url: "https://gov.bc.ca/businessplan" },
+          { label: "WorkBC: Planning resources", url: "https://www.workbc.ca/access-employer-resources/manage-your-business/planning-resources" }
+        ]
+      },
+
+      skills: {
+        area: "Idea Feasibility",
+        question: "Is your idea feasible?",
+        title: "You have the necessary skills and qualifications",
+        how: [
+          "Check whether your work requires licences/certifications (trade, safety, food handling, etc.).",
+          "Compare your offer to competitors: quality, speed, language, warranty, service.",
+          "Identify 1–3 skill gaps and choose training (course, mentorship, shadowing)."
+        ],
+        resources: [
+          { label: "SkilledTradesBC: Get certified (trades)", url: "https://skilledtradesbc.ca/get-certified" },
+          { label: "BC: Permits & licences (overview)", url: "https://www2.gov.bc.ca/gov/content/employment-business/business/managing-a-business/starting-a-business/permits-licences" }
+        ]
+      },
+
+      research: {
+        area: "Market",
+        question: "Is there a market?",
+        title: "Conduct market research",
+        how: [
+          "Interview 10–20 potential customers (problems, current solutions, willingness to pay).",
+          "Read competitor reviews to find common complaints and unmet needs.",
+          "Validate demographics and market size using StatsCan and BC resources."
+        ],
+        resources: [
+          { label: "BC: Market research resources", url: "https://www2.gov.bc.ca/gov/content/employment-business/business/managing-a-business/starting-a-business/conduct-market-research/resources-for-market-research" },
+          { label: "Statistics Canada: Market research (catalogue)", url: "https://www150.statcan.gc.ca/n1/en/catalogue/33220002" },
+          { label: "BDC: How to conduct market research", url: "https://www.bdc.ca/en/articles-tools/blog/how-conduct-market-research-small-businesses" }
+        ]
+      },
+
+      target: {
+        area: "Market",
+        question: "Is there a market?",
+        title: "Identify your target customer",
+        how: [
+          "Write a simple customer profile: who, where, problem, buying triggers.",
+          "Pick ONE primary segment first (e.g., newcomers in Kelowna, busy professionals).",
+          "Validate by asking real people: “Would you buy? What would stop you?”"
+        ],
+        resources: [
+          { label: "Canada: Business research hub", url: "https://www.canada.ca/en/services/business/research.html" },
+          { label: "BC: Market research resources", url: "https://www2.gov.bc.ca/gov/content/employment-business/business/managing-a-business/starting-a-business/conduct-market-research/resources-for-market-research" }
+        ]
+      },
+
+      competitors: {
+        area: "Competition",
+        question: "Can you take on the competition?",
+        title: "Identify your main competitors",
+        how: [
+          "Search Google + Google Maps + social media for your service in your area.",
+          "List 5–10 competitors: pricing, packages, turnaround time, reviews.",
+          "Include substitutes (DIY, big-box stores, online options)."
+        ],
+        resources: [
+          { label: "BC: Business plan guide (competition)", url: "https://gov.bc.ca/businessplan" }
+        ]
+      },
+
+      advantage: {
+        area: "Competition",
+        question: "Can you take on the competition?",
+        title: "Develop your competitive advantage",
+        how: [
+          "Choose 1–2 clear strengths (faster, more trusted, niche language, better results).",
+          "Turn it into one sentence: “We help X achieve Y by Z.”",
+          "Test it with customers and revise based on feedback."
+        ],
+        resources: [
+          { label: "WorkBC: Planning resources", url: "https://www.workbc.ca/access-employer-resources/manage-your-business/planning-resources" }
+        ]
+      },
+
+      "startup-costs": {
+        area: "Finance",
+        question: "Can you afford to start?",
+        title: "Understand start-up costs",
+        how: [
+          "List one-time costs (registration, equipment, website, initial inventory).",
+          "Get real quotes (compare at least 3 options).",
+          "Add a 10–20% buffer for surprises."
+        ],
+        resources: [
+          { label: "BC: Business plan guide (financials)", url: "https://gov.bc.ca/businessplan" }
+        ]
+      },
+
+      "working-capital": {
+        area: "Finance",
+        question: "Can you afford to start?",
+        title: "Understand working capital needs",
+        how: [
+          "Estimate monthly costs for 6 months (rent, phone, insurance, software).",
+          "Estimate time-to-first-sale and time-to-get-paid (cash flow timing).",
+          "Plan for slow months: what will you cut first?"
+        ],
+        resources: [
+          { label: "BDC: Market research guide (revenue assumptions)", url: "https://www.bdc.ca/en/articles-tools/blog/how-conduct-market-research-small-businesses" }
+        ]
+      },
+
+      funding: {
+        area: "Finance",
+        question: "Can you afford to start?",
+        title: "Know your funding or financing options",
+        how: [
+          "List what you can invest personally (money + time).",
+          "Compare reputable options (loans, mentorship programs).",
+          "Avoid paying for “guaranteed grants” or “grant lists.”"
+        ],
+        resources: [
+          { label: "WeBC: Business Loan Info Session", url: "https://we-bc.ca/blis/" },
+          { label: "Futurpreneur: Core Startup Program", url: "https://futurpreneur.ca/en/offering/core-startup/" },
+          { label: "Community Futures Central Okanagan: Business lending", url: "https://cfdcco.com/services/business-lending" }
+        ]
+      },
+
+      municipal: {
+        area: "Compliance",
+        question: "Can your business comply?",
+        title: "Consult local municipal office on regulations and licensing",
+        how: [
+          "Confirm if your business is home-based, mobile, or commercial.",
+          "Check Kelowna business licence requirements and apply early.",
+          "Use BizPaL to identify licences across governments."
+        ],
+        resources: [
+          { label: "Kelowna: Home-based businesses", url: "https://www.kelowna.ca/business-services/permits-licences/business-licences/home-businesses" },
+          { label: "Kelowna: Apply for a business licence", url: "https://billing.kelowna.ca/accounts/eapply/licensing/applywelcome.aspx" },
+          { label: "BizPaL (permits & licences finder)", url: "https://bizpal.ca/" }
+        ]
+      },
+
+      zoning: {
+        area: "Compliance",
+        question: "Can your business comply?",
+        title: "Check zoning or land-use bylaws",
+        how: [
+          "Look up your address zoning in Kelowna Map Viewer.",
+          "Check rules for customer visits, parking, signage, noise, storage, deliveries.",
+          "If uncertain, contact the City before spending money."
+        ],
+        resources: [
+          { label: "Kelowna: Map Viewer (zoning lookup)", url: "https://maps.kelowna.ca/public/mapviewer/" },
+          { label: "Kelowna: Zoning bylaw overview", url: "https://www.kelowna.ca/homes-building/zoning-land-use/zoning-bylaw" }
+        ]
+      },
+
+      "guaranteed-work": {
+        area: "Sales Readiness",
+        question: "Are you confident you’ll get sales straight away?",
+        title: "Try to secure guaranteed work before you start",
+        how: [
+          "Offer a paid pilot (limited spots) and collect testimonials.",
+          "Ask for letters of intent (LOIs) or pre-orders when appropriate.",
+          "Track conversion: inquiries → quotes → paid customers."
+        ],
+        resources: [
+          { label: "WeBC: What is market research?", url: "https://we-bc.ca/online_resources/what-is-market-research-what-can-it-do-for-you/" }
+        ]
+      },
+
+      channels: {
+        area: "Sales Readiness",
+        question: "Are you confident you’ll get sales straight away?",
+        title: "Have marketing plan and sales channels ready",
+        how: [
+          "Pick 1–2 channels first (Google Business Profile, Instagram, referrals, local groups).",
+          "Prepare your offer + pricing + next steps (booking, payment, delivery).",
+          "Write a short sales script and test it with real customers."
+        ],
+        resources: [
+          { label: "BC: Small business resources hub", url: "https://www2.gov.bc.ca/gov/content/employment-business/business/small-business/resources" }
+        ]
+      },
+
+      final: {
+        area: "Final Check",
+        question: "Do you have what it takes?",
+        title: "If you have everything above covered, you’re on the right path",
+        how: [
+          "Review unchecked items: are they 'must fix' or 'nice to have'?",
+          "Write your top 3 risks and one mitigation for each.",
+          "Talk to an advisor before spending heavily."
+        ],
+        resources: [
+          { label: "Community Futures Central Okanagan: Business lending", url: "https://cfdcco.com/services/business-lending" },
+          { label: "WeBC: Business Loan Info Session", url: "https://we-bc.ca/blis/" }
+        ]
+      }
+    };
+
+    const drawer = document.getElementById("drawer");
+    const overlay = document.getElementById("drawerOverlay");
+    const closeBtn = document.getElementById("closeBtn");
+    const drawerTitle = document.getElementById("drawerTitle");
+    const drawerTag = document.getElementById("drawerTag");
+    const tabHow = document.getElementById("tabHow");
+    const tabRes = document.getElementById("tabRes");
+    const howPanel = document.getElementById("howPanel");
+    const resPanel = document.getElementById("resPanel");
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function renderHow(data){
+      const lis = (data.how || []).map(x => `<li>${escapeHtml(x)}</li>`).join("");
+      return `
+        <div class="section">
+          <div class="sectionTitle">Step-by-step</div>
+          <ul>${lis || "<li>No guidance yet.</li>"}</ul>
+        </div>
+      `;
+    }
+
+    function renderRes(data){
+      const links = (data.resources || []).map(r =>
+        `<div class="links"><a href="${escapeHtml(r.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(r.label)}</a></div>`
+      ).join("");
+      return `
+        <div class="section">
+          <div class="sectionTitle">Official links</div>
+          ${links || `<div class="tiny">No links yet.</div>`}
+          <div class="hint">Links open in a new tab.</div>
+        </div>
+      `;
+    }
+
+    function setTab(which){
+      const isHow = which === "how";
+      tabHow.classList.toggle("active", isHow);
+      tabHow.setAttribute("aria-selected", isHow ? "true" : "false");
+      tabRes.classList.toggle("active", !isHow);
+      tabRes.setAttribute("aria-selected", !isHow ? "true" : "false");
+      howPanel.style.display = isHow ? "block" : "none";
+      resPanel.style.display = isHow ? "none" : "block";
+    }
+
+    function openDrawer(id, mode){
+      const data = CONTENT[id];
+      if(!data) return;
+
+      drawerTitle.textContent = data.title;
+      drawerTag.textContent = `${data.area} • ${data.question}`;
+      howPanel.innerHTML = renderHow(data);
+      resPanel.innerHTML = renderRes(data);
+
+      setTab(mode === "res" ? "res" : "how");
+
+      drawer.classList.add("open");
+      overlay.classList.add("open");
+      drawer.setAttribute("aria-hidden", "false");
+      overlay.setAttribute("aria-hidden", "false");
+    }
+
+    function closeDrawer(){
+      drawer.classList.remove("open");
+      overlay.classList.remove("open");
+      drawer.setAttribute("aria-hidden", "true");
+      overlay.setAttribute("aria-hidden", "true");
+    }
+
+    document.querySelectorAll("button[data-open]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        openDrawer(btn.getAttribute("data-id"), btn.getAttribute("data-open"));
+      });
+    });
+
+    tabHow.addEventListener("click", () => setTab("how"));
+    tabRes.addEventListener("click", () => setTab("res"));
+    closeBtn.addEventListener("click", closeDrawer);
+    overlay.addEventListener("click", closeDrawer);
+    document.addEventListener("keydown", (e) => {
+      if(e.key === "Escape") closeDrawer();
+    });
+  </script>
+</body>
+</html>
